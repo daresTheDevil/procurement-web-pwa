@@ -1,5 +1,5 @@
 <template>
-  <v-app light class="grey lighten-2">
+  <v-app light class="grey lighten-5">
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"

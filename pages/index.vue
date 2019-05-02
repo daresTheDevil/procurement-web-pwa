@@ -8,20 +8,12 @@
       <v-container grid-list-md fill-height fluid>
         <v-layout row wrap align-center fill-height>
           <v-flex xs12 md5 class="white--text" offset-md1>
-            <h1
-              class="font-weight-bold"
-              :class="$vuetify.breakpoint.smAndDown ? 'display-1' : 'display-2'"
-            >
-              Want to do business with MDE?
-            </h1>
-            <p
-              :class="$vuetify.breakpoint.smAndDown ? 'subheading' : 'title'"
-              class="font-weight-light"
-            >
+            <h1 style="font-size: 3rem;">Want to do business with MDE?</h1>
+            <h2 class="font-weight-regular">
               The Office of Procurement facilitates the procurement of goods and
               services necessary for the effective and efficient operation of
               the Mississippi Department of Education (MDE).
-            </p>
+            </h2>
             <br />
             <v-btn
               :large="$vuetify.breakpoint.smAndUp"
@@ -53,6 +45,41 @@
           </h1>
           <v-toolbar color="white" class="elevation-2" light>
             <v-layout row>
+              <!-- <v-flex shrink class="py-0">
+                <v-tabs v-model="filter" height="64">
+                  <v-tabs-slider height="10" color="primary" />
+                  <v-tab value="all">
+                    <v-avatar
+                      size="24"
+                      class="mr-2 white--text"
+                      color="secondary"
+                      dark
+                      >{{ results.length }}</v-avatar
+                    >
+                    All
+                  </v-tab>
+                  <v-tab value="contracts">
+                    <v-avatar
+                      size="24"
+                      class="mr-2 white--text"
+                      color="accent"
+                      dark
+                      >{{ contractsCount }}</v-avatar
+                    >
+                    Contracts
+                  </v-tab>
+                  <v-tab value="grants">
+                    <v-avatar
+                      size="24"
+                      class="mr-2 white--text"
+                      color="info"
+                      dark
+                      >{{ grantsCount }}</v-avatar
+                    >
+                    Grants
+                  </v-tab>
+                </v-tabs>
+              </v-flex> -->
               <v-flex shrink>
                 <v-btn-toggle
                   v-model="filter"
@@ -60,37 +87,38 @@
                   class="transparent mr-2"
                 >
                   <v-btn value="all" large flat>
-                    All
                     <v-avatar
                       size="24"
-                      class="ml-2 white--text"
+                      class="mr-2 white--text"
                       color="primary"
                       dark
                       >{{ results.length }}</v-avatar
                     >
+                    All
                   </v-btn>
                   <v-btn flat value="contracts" large>
-                    Contracts
                     <v-avatar
                       size="24"
-                      class="ml-2 white--text"
+                      class="mr-2 white--text"
                       color="secondary"
                       dark
                       >{{ contractsCount }}</v-avatar
                     >
+                    Contracts
                   </v-btn>
                   <v-btn flat value="grants" large>
-                    Grants
                     <v-avatar
                       size="24"
-                      class="ml-2 white--text"
+                      class="mr-2 white--text"
                       color="error"
                       dark
                       >{{ grantsCount }}</v-avatar
                     >
+                    Grants
                   </v-btn>
                 </v-btn-toggle>
-                <!-- <v-select
+              </v-flex>
+              <!-- <v-select
                   v-model="filter"
                   hide-details
                   :items="solicitationTypes"
@@ -102,7 +130,6 @@
                   label="Solicitation type"
                 />
                 -->
-              </v-flex>
 
               <v-flex>
                 <v-text-field
@@ -123,8 +150,7 @@
               </v-flex>
             </v-layout>
           </v-toolbar>
-        </v-container>
-        <v-container>
+
           <v-layout row justify-center>
             <v-flex xs6>
               <v-card
@@ -147,8 +173,7 @@
               </v-card>
             </v-flex>
           </v-layout>
-        </v-container>
-        <v-container grid-list-lg>
+
           <v-layout column>
             <v-flex v-for="item in filteredSolicitations" :key="item.openDate">
               <v-card>
