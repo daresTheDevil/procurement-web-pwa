@@ -12,7 +12,7 @@ Vue.use(Vuetify, {
     secondary: '#438496', // colors.teal.darken1, #438496
     info: '#328cc1', // colors.lightBlue.base,
     warning: '#d9b310', // colors.amber.darken2,
-    error: '#f53240', // b82601 colors.red.darken1,
-    success: '#3cc47c' // colors.green.darken2
+    error: '#c0392b', //  '#f53240', // b82601 colors.red.darken1,
+    success: '#27ae60' //  '#3cc47c' // colors.green.darken2
   }
 })

@@ -53,30 +53,57 @@
           </h1>
           <v-toolbar color="white" class="elevation-2" light>
             <v-layout row>
-              <v-flex xs2>
-                <v-select
+              <v-flex shrink>
+                <v-btn-toggle
+                  v-model="filter"
+                  mandatory
+                  class="transparent mr-2"
+                >
+                  <v-btn value="all" large flat>
+                    All
+                    <v-avatar
+                      size="24"
+                      class="ml-2 white--text"
+                      color="primary"
+                      dark
+                      >{{ results.length }}</v-avatar
+                    >
+                  </v-btn>
+                  <v-btn flat value="contracts" large>
+                    Contracts
+                    <v-avatar
+                      size="24"
+                      class="ml-2 white--text"
+                      color="secondary"
+                      dark
+                      >{{ contractsCount }}</v-avatar
+                    >
+                  </v-btn>
+                  <v-btn flat value="grants" large>
+                    Grants
+                    <v-avatar
+                      size="24"
+                      class="ml-2 white--text"
+                      color="error"
+                      dark
+                      >{{ grantsCount }}</v-avatar
+                    >
+                  </v-btn>
+                </v-btn-toggle>
+                <!-- <v-select
+                  v-model="filter"
                   hide-details
                   :items="solicitationTypes"
                   solo
-                  multiple
                   menu-props="overflowY"
                   light
                   background-color="grey lighten-2"
                   flat
                   label="Solicitation type"
                 />
+                -->
               </v-flex>
-              <v-flex xs2>
-                <v-select
-                  :items="requestTypes"
-                  hide-details
-                  solo
-                  light
-                  background-color="grey lighten-2"
-                  flat
-                  label="Request type"
-                />
-              </v-flex>
+
               <v-flex>
                 <v-text-field
                   v-model="search"
@@ -97,15 +124,39 @@
             </v-layout>
           </v-toolbar>
         </v-container>
+        <v-container>
+          <v-layout row justify-center>
+            <v-flex xs6>
+              <v-card
+                v-if="results.length === 0"
+                color="error"
+                flat
+                dark
+                class="mb-3"
+              >
+                <v-container grid-list-md class="py-2">
+                  <v-layout row align-center>
+                    <v-flex shrink>
+                      <v-icon large>mdi-alert-decagram</v-icon>
+                    </v-flex>
+                    <v-flex class="text-xs-left">
+                      No open solicitations match your search results.
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
         <v-container grid-list-lg>
           <v-layout column>
-            <v-flex v-for="item in results" :key="item.openDate">
+            <v-flex v-for="item in filteredSolicitations" :key="item.openDate">
               <v-card>
                 <v-card-text>
                   <v-layout row>
                     <v-flex xs10>
                       <div class="mb-2">
-                        <v-chip small dark color="info" label>{{
+                        <v-chip small dark color="info">{{
                           item.solicitationType
                         }}</v-chip>
                       </div>
@@ -139,11 +190,12 @@
                           }}</span
                         >
                       </h1>
-                      <v-btn block small depressed color="primary"
+                      <v-btn block small round depressed color="primary"
                         >See details</v-btn
                       >
                       <v-btn
                         block
+                        round
                         small
                         depressed
                         color="primary"
@@ -286,8 +338,13 @@ export default {
     return {
       search: '',
       results: [],
+      filter: 'all',
       solicitationsFilter: 1,
-      solicitationTypes: ['Goods', 'Services', 'Contracts', 'Grants'],
+      solicitationTypes: [
+        { text: 'All', value: 'all' },
+        { text: 'Contracts', value: 'contracts' },
+        { text: 'Grants', value: 'grants' }
+      ],
       requestTypes: ['RFP', 'RFA', 'RFI', 'IFB']
     }
   },
@@ -301,6 +358,14 @@ export default {
       return this.results.filter(item => item.solicitationType === 'Services')
         .length
     },
+    grantsCount() {
+      return this.results.filter(item => item.solicitationType === 'Contract')
+        .length
+    },
+    contractsCount() {
+      return this.results.filter(item => item.solicitationType === 'Grant')
+        .length
+    },
     closingCount() {
       return this.results.filter(item =>
         this.$moment(item.closeDate).isBetween(
@@ -310,17 +375,10 @@ export default {
       ).length
     },
     filteredSolicitations() {
-      if (this.solicitationsFilter === 2)
-        return this.results.filter(item => item.solicitationType === 'Goods')
-      else if (this.solicitationsFilter === 3)
-        return this.results.filter(item => item.solicitationType === 'Services')
-      else if (this.solicitationsFilter === 4)
-        return this.results.filter(item =>
-          this.$moment(item.closeDate).isBetween(
-            this.$moment(),
-            this.$moment().endOf('month')
-          )
-        )
+      if (this.filter === 'contracts')
+        return this.results.filter(item => item.solicitationType === 'Contract')
+      else if (this.filter === 'grants')
+        return this.results.filter(item => item.solicitationType === 'Grant')
       return this.results
     }
   },
