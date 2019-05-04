@@ -182,12 +182,12 @@
                     <v-flex xs10>
                       <div class="mb-2">
                         <v-chip small dark color="info">{{
-                          item.solicitationType
+                          item.noticeType
                         }}</v-chip>
                       </div>
-                      <h1 class="title">{{ item.solicitationTitle }}</h1>
+                      <h1 class="title">{{ item.noticeTitle }}</h1>
                       <v-divider class="my-2" />
-                      {{ item.solicitationText }}
+                      {{ item.noticeText }}
                     </v-flex>
                     <v-flex xs2>
                       <h1 class="body-1 font-weight-bold">
@@ -197,7 +197,7 @@
                       </h1>
                       <h1 class="body-1 font-weight-bold">
                         Solicitation Type:<span class="body-1">
-                          {{ item.solicitationType }}</span
+                          {{ item.noticeType }}</span
                         >
                       </h1>
                       <h1 class="body-1 font-weight-bold">
@@ -302,11 +302,11 @@
               <v-flex v-for="(item, i) in results" :key="i">
                 <v-card>
                   <v-card-title class="title">{{
-                    item.solicitationTitle
+                    item.noticeTitle
                   }}</v-card-title>
                   <v-divider />
                   <v-card-text>
-                    {{ item.solicitationText }}
+                    {{ item.noticeText }}
                   </v-card-text>
                   <v-card-text>
                     <h1 class="subheading font-weight-bold">
@@ -376,20 +376,16 @@ export default {
   computed: {
     ...mapGetters({ solicitations: 'getSolicitations' }),
     goodsCount() {
-      return this.results.filter(item => item.solicitationType === 'Goods')
-        .length
+      return this.results.filter(item => item.noticeType === 'Goods').length
     },
     servicesCount() {
-      return this.results.filter(item => item.solicitationType === 'Services')
-        .length
+      return this.results.filter(item => item.noticeType === 'Services').length
     },
     grantsCount() {
-      return this.results.filter(item => item.solicitationType === 'Contract')
-        .length
+      return this.results.filter(item => item.noticeType === 'Contract').length
     },
     contractsCount() {
-      return this.results.filter(item => item.solicitationType === 'Grant')
-        .length
+      return this.results.filter(item => item.noticeType === 'Grant').length
     },
     closingCount() {
       return this.results.filter(item =>
@@ -401,9 +397,9 @@ export default {
     },
     filteredSolicitations() {
       if (this.filter === 'contracts')
-        return this.results.filter(item => item.solicitationType === 'Contract')
+        return this.results.filter(item => item.noticeType === 'Contract')
       else if (this.filter === 'grants')
-        return this.results.filter(item => item.solicitationType === 'Grant')
+        return this.results.filter(item => item.noticeType === 'Grant')
       return this.results
     }
   },
@@ -419,14 +415,11 @@ export default {
       this.$router.replace('/submit')
     },
     searchSolicitations() {
-      this.results = this.solicitations.filter(
+      this.results = this.notices.filter(
         item =>
-          item.solicitationTitle
-            .toLowerCase()
-            .indexOf(this.search.toLowerCase()) > -1 ||
-          item.solicitationText
-            .toLowerCase()
-            .indexOf(this.search.toLowerCase()) > -1
+          item.noticeTitle.toLowerCase().indexOf(this.search.toLowerCase()) >
+            -1 ||
+          item.noticeText.toLowerCase().indexOf(this.search.toLowerCase()) > -1
       )
     }
   }

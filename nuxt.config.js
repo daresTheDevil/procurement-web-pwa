@@ -53,7 +53,8 @@ export default {
       '@nuxtjs/pwa',
       { nativeUI: true, appleStatusBarStyle: 'black-translucent' }
     ],
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
+    '@nuxtjs/toast'
   ],
   /*
    ** Axios module configuration

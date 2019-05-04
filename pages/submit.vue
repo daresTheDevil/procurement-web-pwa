@@ -90,65 +90,15 @@
                 <v-container grid-list-lg fluid class="my-0">
                   <v-layout row wrap justify-center>
                     <v-flex xs8 class="text-xs-left">
-                      <h2>Selected {{ solicitation[0].solicitationType }}:</h2>
-                      <br />
-                      <v-card light>
-                        <v-card-title>
-                          <v-chip small dark color="secondary"
-                            >{{ solicitation[0].solicitationType }}
-                          </v-chip>
-
-                          <h3 v-text="solicitation[0].solicitationTitle" />
-                        </v-card-title>
-                        <v-card-text class="py-1">
-                          <p v-text="solicitation[0].solicitationText" />
-
-                          <!-- <v-flex shrink>
-                              <v-list
-                                dense
-                                class="transparent pa-1 text-xs-center"
-                              >
-                                <v-list-tile>
-                                  <v-list-tile-content>
-                                    <v-list-tile-sub-title
-                                      >Open Date:</v-list-tile-sub-title
-                                    >
-                                    <v-list-tile-title
-                                      v-text="
-                                        new Date(
-                                          solicitation[0].openDate
-                                        ).toLocaleDateString()
-                                      "
-                                    />
-                                  </v-list-tile-content>
-                                </v-list-tile>
-                                <v-list-tile>
-                                  <v-list-tile-content>
-                                    <v-list-tile-sub-title
-                                      >Close Date:</v-list-tile-sub-title
-                                    >
-                                    <v-list-tile-title
-                                      >{{
-                                        new Date(
-                                          solicitation[0].closeDate
-                                        ).toLocaleDateString()
-                                      }}
-                                    </v-list-tile-title>
-                                  </v-list-tile-content>
-                                </v-list-tile>
-                              </v-list>
-                            </v-flex> -->
-                        </v-card-text>
-                      </v-card>
-                      <v-divider class="my-4" />
-                      <h2>
+                      <h1>
                         Welcome to the MDE Procurement Submission portal.
-                      </h2>
+                      </h1>
+                      <br />
                       <p>
                         Follow the steps on your screen and you will be able to
                         successfully submit your response.
                       </p>
-                      <p class="font-weight-bold">
+                      <p>
                         Things you'll need to complete your response:
                       </p>
                       <ul>
@@ -227,7 +177,7 @@
                           >
                             <a
                               slot="activator"
-                              class="mb-1 font-weight-black white--text"
+                              class="mb-1 font-weight-black secondary--text"
                               target="_blank"
                               href="https://support.office.com/en-ie/article/save-or-convert-to-pdf-or-xps-d85416c5-7d77-4fd6-a216-6f4bf7c7c110#ID0EAADAAA=Office_2010_and_Newer_Versions"
                             >
@@ -246,131 +196,19 @@
                         </li>
                       </ul>
 
-                      <!-- <v-card color="primary" flat dark class="mb-4">
-                        <v-container grid-list-md class="py-2">
-                          <v-layout row align-center>
-                            <v-flex shrink>
-                              <v-icon large>mdi-school</v-icon>
-                            </v-flex>
-                            <v-flex class="text-xs-left ">
-                              Welcome to the MDE Procurement Submission portal.
-                              Follow the steps on your screen and you will be
-                              able to successfully submit.
-                            </v-flex>
-                          </v-layout>
-                        </v-container>
-                        <v-divider />
-                        <v-container grid-list-md class="py-2">
-                          <v-layout row align-start>
-                            <v-flex shrink>
-                              <v-icon large>mdi-format-list-checks</v-icon>
-                            </v-flex>
-                            <v-flex class="text-xs-left">
-                              <h1 class="subheading">
-                                Things you'll need to complete your response:
-                              </h1>
-                              <br />
-                              <ul>
-                                <li>
-                                  <v-menu
-                                    max-width="300"
-                                    color="secondary"
-                                    dark
-                                    offset-y
-                                    top
-                                    left
-                                    nudge-top="10"
-                                    open-on-hover
-                                  >
-                                    <a
-                                      slot="activator"
-                                      class="mb-1 font-weight-black white--text"
-                                      target="_blank"
-                                      href="https://www.grants.gov/applicants/organization-registration/step-1-obtain-duns-number.html"
-                                    >
-                                      DUNS number
-                                    </a>
-                                    <v-card color="secondary">
-                                      <v-card-text>
-                                        <span class="subheading">
-                                          DUNS numbers are 9 digit numbers
-                                          required to do business with the
-                                          federal government.
-                                        </span>
-                                      </v-card-text>
-                                    </v-card>
-                                  </v-menu>
-                                  or
-                                  <v-menu
-                                    max-width="300"
-                                    color="secondary"
-                                    dark
-                                    offset-y
-                                    top
-                                    right
-                                    nudge-top="10"
-                                    open-on-hover
-                                  >
-                                    <a
-                                      slot="activator"
-                                      class="mb-1 font-weight-black white--text"
-                                      target="_blank"
-                                      href="https://corp.sos.ms.gov/corp/portal/c/page/corpBusinessIdSearch/portal.aspx?#clear=1"
-                                    >
-                                      Business ID
-                                    </a>
-                                    <v-card color="secondary">
-                                      <v-card-text>
-                                        <span class="subheading">
-                                          Business IDs are 6 or 7 digit numbers
-                                          numbers assigned to businesses
-                                          registered with the Mississippi
-                                          Secretary of State.
-                                        </span>
-                                      </v-card-text>
-                                    </v-card>
-                                  </v-menu>
-                                </li>
-                                <li>
-                                  Contact name, phone and Email
-                                </li>
-                                <li>
-                                  Your response and any supporting documents in
-                                  <v-menu
-                                    max-width="300"
-                                    color="secondary"
-                                    dark
-                                    offset-y
-                                    top
-                                    right
-                                    nudge-top="10"
-                                    open-on-hover
-                                  >
-                                    <a
-                                      slot="activator"
-                                      class="mb-1 font-weight-black white--text"
-                                      target="_blank"
-                                      href="https://support.office.com/en-ie/article/save-or-convert-to-pdf-or-xps-d85416c5-7d77-4fd6-a216-6f4bf7c7c110#ID0EAADAAA=Office_2010_and_Newer_Versions"
-                                    >
-                                      PDF format
-                                    </a>
-                                    <v-card color="secondary">
-                                      <v-card-text>
-                                        <span class="subheading">
-                                          PDF files are platform independent and
-                                          ensure that vendor submission
-                                          documents are readable by MDE.
-                                        </span>
-                                      </v-card-text>
-                                    </v-card>
-                                  </v-menu>
-                                </li>
-                              </ul>
-                            </v-flex>
-                          </v-layout>
-                        </v-container>
-                      </v-card> -->
-                      <v-divider class="my-3" />
+                      <v-divider class="my-4" />
+
+                      <h2>You're responding to:</h2>
+                      <v-card light>
+                        <v-card-title>
+                          <h3 v-text="solicitation[0].solicitationTitle" />
+                        </v-card-title>
+                        <v-card-text class="py-1">
+                          <p v-text="solicitation[0].solicitationText" />
+                        </v-card-text>
+                      </v-card>
+
+                      <v-divider class="my-4" />
 
                       <h4>Enter your DUNS or Business ID to continue:</h4>
                       <v-text-field
@@ -648,7 +486,7 @@
                   <v-layout row justify-center>
                     <v-flex xs4>
                       <v-subheader>Entered information:</v-subheader>
-                      <v-list class="transparent">
+                      <v-list two-line class="transparent">
                         <v-list-tile>
                           <v-list-tile-avatar>
                             <v-icon>mdi-barcode</v-icon>
@@ -748,127 +586,137 @@
                 <v-container grid-list-lg fluid class="my-0">
                   <v-layout row justify-center>
                     <v-flex xs12 sm8>
-                      <v-card light>
-                        <v-card-title class="success white--text"
-                          ><v-icon large dark class="mr-3">mdi-check</v-icon>
-                          <h3>
-                            Your submission was successfully received!
-                          </h3></v-card-title
-                        >
-                        <v-card-text>
-                          <v-layout row justify-center>
-                            <v-flex xs6>
-                              <v-subheader>Submission Information:</v-subheader>
-                              <v-list class="transparent">
-                                <v-list-tile>
-                                  <v-list-tile-avatar>
-                                    <v-icon color="success"
-                                      >mdi-fingerprint</v-icon
-                                    >
-                                  </v-list-tile-avatar>
-                                  <v-list-tile-content>
-                                    <v-list-tile-sub-title
-                                      >Response ID:</v-list-tile-sub-title
-                                    >
-                                    <v-list-tile-title
-                                      >123456789</v-list-tile-title
-                                    >
-                                  </v-list-tile-content>
-                                </v-list-tile>
-                                <v-list-tile>
-                                  <v-list-tile-avatar>
-                                    <v-icon color="success">mdi-barcode</v-icon>
-                                  </v-list-tile-avatar>
-                                  <v-list-tile-content>
-                                    <v-list-tile-sub-title
-                                      >Solicitation
-                                      Title:</v-list-tile-sub-title
-                                    >
-                                    <v-list-tile-title>{{
-                                      notificationTitle
-                                    }}</v-list-tile-title>
-                                  </v-list-tile-content>
-                                </v-list-tile>
-                                <v-list-tile>
-                                  <v-list-tile-avatar>
-                                    <v-icon color="success">mdi-domain</v-icon>
-                                  </v-list-tile-avatar>
-                                  <v-list-tile-content>
-                                    <v-list-tile-sub-title
-                                      >Company/DBA/Vendor
-                                      Name</v-list-tile-sub-title
-                                    >
-                                    <v-list-tile-title>{{
-                                      vendorName
-                                    }}</v-list-tile-title>
-                                  </v-list-tile-content>
-                                </v-list-tile>
-                                <v-list-tile>
-                                  <v-list-tile-avatar>
-                                    <v-icon color="success">mdi-account</v-icon>
-                                  </v-list-tile-avatar>
-                                  <v-list-tile-content>
-                                    <v-list-tile-sub-title
-                                      >Contact Name:</v-list-tile-sub-title
-                                    >
-                                    <v-list-tile-title
-                                      >{{ contactFirstName }}
-                                      {{ contactLastName }}</v-list-tile-title
-                                    >
-                                  </v-list-tile-content>
-                                </v-list-tile>
-                                <v-list-tile>
-                                  <v-list-tile-avatar>
-                                    <v-icon color="success">mdi-email</v-icon>
-                                  </v-list-tile-avatar>
-                                  <v-list-tile-content>
-                                    <v-list-tile-sub-title
-                                      >Contact Email:</v-list-tile-sub-title
-                                    >
-                                    <v-list-tile-title>{{
-                                      contactEmail
-                                    }}</v-list-tile-title>
-                                  </v-list-tile-content>
-                                </v-list-tile>
-                                <v-list-tile>
-                                  <v-list-tile-avatar>
-                                    <v-icon color="success">mdi-phone</v-icon>
-                                  </v-list-tile-avatar>
-                                  <v-list-tile-content>
-                                    <v-list-tile-sub-title
-                                      >Contact Phone:</v-list-tile-sub-title
-                                    >
-                                    <v-list-tile-title>{{
-                                      formatPhoneNumber
-                                    }}</v-list-tile-title>
-                                  </v-list-tile-content>
-                                </v-list-tile>
-                              </v-list>
-                            </v-flex>
-                            <v-flex xs6>
-                              <v-subheader>Attached Files:</v-subheader>
-                              <v-list class="transparent" light>
-                                <v-list-tile
-                                  v-for="(file, x) in files"
-                                  :key="x"
+                      <div ref="capture">
+                        <v-card light>
+                          <v-card-title class="success white--text"
+                            ><v-icon large dark class="mr-3">mdi-check</v-icon>
+                            <h3>
+                              Your submission was successfully received!
+                            </h3></v-card-title
+                          >
+                          <v-card-text>
+                            <v-layout row justify-center>
+                              <v-flex xs6>
+                                <v-subheader
+                                  >Submission Information:</v-subheader
                                 >
-                                  <v-list-tile-avatar>
-                                    <v-icon color="green">mdi-check</v-icon>
-                                  </v-list-tile-avatar>
-                                  <v-list-tile-content>
-                                    <v-list-tile-sub-title
-                                      >Filename:</v-list-tile-sub-title
-                                    >
-                                    <v-list-tile-title>{{
-                                      file.name
-                                    }}</v-list-tile-title>
-                                  </v-list-tile-content>
-                                </v-list-tile>
-                              </v-list>
-                            </v-flex>
-                          </v-layout>
-                        </v-card-text>
-                      </v-card>
+                                <v-list two-line class="transparent">
+                                  <v-list-tile>
+                                    <v-list-tile-avatar>
+                                      <v-icon color="success"
+                                        >mdi-fingerprint</v-icon
+                                      >
+                                    </v-list-tile-avatar>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Response ID:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title
+                                        >123456789</v-list-tile-title
+                                      >
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-avatar>
+                                      <v-icon color="success"
+                                        >mdi-barcode</v-icon
+                                      >
+                                    </v-list-tile-avatar>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Solicitation
+                                        Title:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        notificationTitle
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-avatar>
+                                      <v-icon color="success"
+                                        >mdi-domain</v-icon
+                                      >
+                                    </v-list-tile-avatar>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Company/DBA/Vendor
+                                        Name</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        vendorName
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-avatar>
+                                      <v-icon color="success"
+                                        >mdi-account</v-icon
+                                      >
+                                    </v-list-tile-avatar>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Contact Name:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title
+                                        >{{ contactFirstName }}
+                                        {{ contactLastName }}</v-list-tile-title
+                                      >
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-avatar>
+                                      <v-icon color="success">mdi-email</v-icon>
+                                    </v-list-tile-avatar>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Contact Email:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        contactEmail
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-avatar>
+                                      <v-icon color="success">mdi-phone</v-icon>
+                                    </v-list-tile-avatar>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Contact Phone:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        formatPhoneNumber
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                </v-list>
+                              </v-flex>
+                              <v-flex xs6>
+                                <v-subheader>Attached Files:</v-subheader>
+                                <v-list two-line class="transparent" light>
+                                  <v-list-tile
+                                    v-for="(file, x) in files"
+                                    :key="x"
+                                  >
+                                    <v-list-tile-avatar>
+                                      <v-icon color="green">mdi-check</v-icon>
+                                    </v-list-tile-avatar>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Filename:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        file.name
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                </v-list>
+                              </v-flex>
+                            </v-layout>
+                          </v-card-text>
+                        </v-card>
+                      </div>
                     </v-flex>
                   </v-layout>
                 </v-container>
@@ -903,6 +751,19 @@
         </v-btn>
         <v-spacer />
         <v-btn
+          v-if="step === 6"
+          depressed
+          color="success"
+          large
+          round
+          @click="print"
+          >Print verification</v-btn
+        >
+        <v-btn v-if="step === 5" depressed color="success" round @click="submit"
+          >Submit response<v-icon>mdi-send</v-icon></v-btn
+        >
+        <v-btn
+          v-if="step < 5"
           depressed
           round
           large
@@ -1096,8 +957,6 @@ export default {
       }
     },
     print() {
-      this.step++
-
       html2canvas(this.$refs.capture)
         .then(canvas => {
           this.printFile = canvas.toDataURL()

@@ -37,6 +37,7 @@
         </div>
       </v-layout>
       <v-spacer />
+      <v-btn round outline tag="a" href="/auth/login">Login</v-btn>
       <v-toolbar-side-icon
         v-if="$vuetify.breakpoint.smAndDown"
         @click="drawer = !drawer"
@@ -45,6 +46,9 @@
     <v-content>
       <nuxt />
     </v-content>
+    <v-snackbar v-model="showSnack" :color="snackColor" top :timeout="2000">
+      <h3>{{ snackMessage }}</h3>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -76,9 +80,24 @@ export default {
       ],
       miniVariant: false,
       right: true,
+      snackMessage: '',
+      snackColor: '',
+      showSnack: false,
       rightDrawer: false,
       title: 'Vuetify.js'
     }
+  },
+  created() {
+    // $on method will receive the updated count value from the sender component
+    this.$nuxt.$on('SHOW_SNACK', data => {
+      this.snackMessage = data.text
+      this.snackColor = data.color
+      this.showSnack = true
+    })
+  },
+  beforeDestroy() {
+    // $off method will turned off the event listner
+    this.$nuxt.$off('SHOW_SNACK')
   }
 }
 </script>
