@@ -112,13 +112,13 @@
               <template v-slot:items="props">
                 <tr @click="props.expanded = !props.expanded">
                   <td>{{ props.item.closeDate }}</td>
-                  <td>{{ props.item.solicitationTitle }}</td>
-                  <td>{{ props.item.solicitationEmail }}</td>
+                  <td>{{ props.item.noticeTitle }}</td>
+                  <td>{{ props.item.mdeContactEmail }}</td>
                 </tr>
               </template>
               <template slot="expand" slot-scope="props">
                 <v-card flat color="light-blue lighten-5">
-                  <v-card-text v-text="props.item.solicitationText" />
+                  <v-card-text v-text="props.item.noticeText" />
                 </v-card>
               </template>
             </v-data-table>

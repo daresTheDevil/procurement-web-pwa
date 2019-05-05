@@ -567,6 +567,7 @@
 <script>
 import feathers from '@/plugins/feathers'
 import { mapGetters } from 'vuex'
+import axios from 'axios'
 // import SolicitationInput from '@/components/SolicitationInput.vue'
 
 export default {
@@ -801,6 +802,52 @@ export default {
   },
 
   methods: {
+    submit() {
+      const formData = new FormData()
+
+      for (let i = 0; i < this.files.length; i++) {
+        const file = this.files[i]
+        formData.append('uri', file)
+      }
+
+      formData.append('uri')
+      formData.append(Object.assign({}, this.editedItem))
+
+      // formData.append('vendorName', this.vendorName)
+      // formData.append('contactFirstName', this.contactFirstName)
+      // formData.append('contactLastName', this.contactLastName)
+      // formData.append('contactEmail', this.contactEmail)
+      // formData.append('contactPhone', this.contactPhone)
+      // formData.append('noticeTitle', this.noticeTitle)
+      // formData.append('noticeText', this.noticeText)
+
+      axios
+        .post(
+          'http://0.0.0.0:3030/submissions',
+          // 'https://mde-procurement-api.azurewebsites.net/submissions',
+          formData,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' }
+            // onUploadProgress: function(progressEvent) {
+            //   this.uploadPercentage = parseInt(
+            //     Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            //   );
+            // }.bind(this)
+          }
+        )
+        .then(response => {
+          // eslint-disable-next-line no-console
+          console.log('response files', response.data.files)
+          this.uploadedFiles = response.data.files
+          this.uploadId = response.data._id
+          this.submissionTime = response.data.createdAt
+          this.formResponse = response.data
+          // this.step = 6
+        })
+        .catch(function() {
+          this.loading = false
+        })
+    },
     editItem(item) {
       this.editedIndex = this.solicitations.indexOf(item)
       this.editedItem = Object.assign({}, item)
@@ -841,7 +888,8 @@ export default {
           noticeType: editedItem.noticeType,
           noticeText: editedItem.noticeText,
           openDate: editedItem.openDate,
-          closeDate: editedItem.closeDate
+          closeDate: editedItem.closeDate,
+          programOffice: editedItem.programOffice
         })
         .then(response => {
           this.fetchSolicitations()
@@ -862,6 +910,7 @@ export default {
           requestType: editedItem.requestType,
           noticeType: editedItem.noticeType,
           noticeText: editedItem.noticeText,
+          programOffice: editedItem.programOffice,
           openDate: editedItem.openDate,
           closeDate: editedItem.closeDate
         })
@@ -887,6 +936,7 @@ export default {
       this.editedItem.mdeContactEmail = ''
       this.editedItem.requestType = ''
       this.editedItem.noticeType = ''
+      this.editedItem.programOffice = ''
       this.editedItem.noticeText = ''
       this.editedItem.openDate = ''
       this.editedItem.closeDate = ''

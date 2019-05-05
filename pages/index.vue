@@ -646,12 +646,12 @@
                       hover
                       class="mx-5"
                       :class="dragging ? 'elevation-10' : 'elevation-0'"
+                      @drop.stop.prevent="handleDragDropUpload"
+                      @dragenter.stop.prevent="dragging = true"
+                      @dragover.stop.prevent="dragging = true"
+                      @dragleave.stop.prevent="dragging = false"
+                      @click="addFiles"
                     >
-                      <!-- @drop.stop.prevent="handleDragDropUpload"
-                        @dragenter.stop.prevent="dragging = true"
-                        @dragover.stop.prevent="dragging = true"
-                        @dragleave.stop.prevent="dragging = false"
-                        @click="addFiles" -->
                       <v-card-text
                         class="text--white text-xs-center"
                         style="border-style: dashed border-color: coral; border-width: 7px;"
@@ -669,7 +669,7 @@
           </v-window-item>
           <v-window-item :value="4">
             <v-card-text>
-              <v-container fill-height>
+              <v-container fill-height grid-list-md>
                 <v-layout fill-height row justify-center align-center>
                   <v-flex xs8>
                     <h1>Verify Information</h1>
@@ -677,146 +677,172 @@
                     <v-container fluid class="py-0">
                       <v-layout row wrap>
                         <v-flex xs6>
-                          <h3>Vendor Contact Information:</h3>
-                          <v-list subheader>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >Vendor/DBA Name:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title>{{
-                                  editedItem.vendorName
-                                }}</v-list-tile-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >Vendor Contact Name:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title
-                                  >{{ editedItem.vendorContactFirstName }}
-                                  {{
-                                    editedItem.vendorContactLastName
-                                  }}</v-list-tile-title
-                                >
-                              </v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >Vendor Contact Email:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title
-                                  >{{ editedItem.vendorContactEmail }}
-                                </v-list-tile-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >Vendor Contact Phone:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title
-                                  >{{ editedItem.vendorContactPhone }}
-                                </v-list-tile-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
-                          </v-list>
+                          <v-card>
+                            <v-toolbar dense light card>
+                              <h3>Vendor Contact Information:</h3>
+                            </v-toolbar>
+                            <v-divider />
+                            <v-card-text>
+                              <v-list subheader>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >Vendor/DBA Name:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title>{{
+                                      editedItem.vendorName
+                                    }}</v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >Vendor Contact
+                                      Name:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title
+                                      >{{ editedItem.vendorContactFirstName }}
+                                      {{
+                                        editedItem.vendorContactLastName
+                                      }}</v-list-tile-title
+                                    >
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >Vendor Contact
+                                      Email:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title
+                                      >{{ editedItem.vendorContactEmail }}
+                                    </v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >Vendor Contact
+                                      Phone:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title
+                                      >{{ editedItem.vendorContactPhone }}
+                                    </v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                              </v-list>
+                            </v-card-text>
+                          </v-card>
                         </v-flex>
                         <v-flex xs6>
-                          <h3>MDE Contact Information:</h3>
-                          <v-list subheader>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >MDE Program Office:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title>{{
-                                  editedItem.programOffice
-                                }}</v-list-tile-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >MDE Contact Name:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title
-                                  >{{ editedItem.mdeContactFirstName }}
-                                  {{
-                                    editedItem.mdeContactLastName
-                                  }}</v-list-tile-title
-                                >
-                              </v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >Vendor Contact Email:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title
-                                  >{{ editedItem.mdeContactEmail }}
-                                </v-list-tile-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >MDE Contact Phone:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title
-                                  >{{ editedItem.mdeContactPhone }}
-                                </v-list-tile-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
-                          </v-list>
+                          <v-card>
+                            <v-toolbar dense card light>
+                              <h3>MDE Contact Information:</h3>
+                            </v-toolbar>
+                            <v-divider />
+                            <v-card-text>
+                              <v-list subheader>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >MDE Program
+                                      Office:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title>{{
+                                      editedItem.programOffice
+                                    }}</v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >MDE Contact Name:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title
+                                      >{{ editedItem.mdeContactFirstName }}
+                                      {{
+                                        editedItem.mdeContactLastName
+                                      }}</v-list-tile-title
+                                    >
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >Vendor Contact
+                                      Email:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title
+                                      >{{ editedItem.mdeContactEmail }}
+                                    </v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >MDE Contact Phone:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title
+                                      >{{ editedItem.mdeContactPhone }}
+                                    </v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                              </v-list>
+                            </v-card-text>
+                          </v-card>
                         </v-flex>
 
                         <v-flex xs12>
-                          <h3>{{ editedItem.noticeType }} Information:</h3>
-                          <v-list subheader>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >Title:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title>{{
-                                  editedItem.noticeTitle
-                                }}</v-list-tile-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >Text:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title>{{
-                                  editedItem.noticeText
-                                }}</v-list-tile-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >Open Date:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title>{{
-                                  editedItem.openDate
-                                }}</v-list-tile-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
-                            <v-list-tile>
-                              <v-list-tile-content>
-                                <v-list-tile-sub-title
-                                  >Close Date:</v-list-tile-sub-title
-                                >
-                                <v-list-tile-title>{{
-                                  editedItem.closeDate
-                                }}</v-list-tile-title>
-                              </v-list-tile-content>
-                            </v-list-tile>
-                          </v-list>
+                          <v-card>
+                            <v-toolbar card light dense>
+                              <h3>{{ editedItem.noticeType }} Information:</h3>
+                            </v-toolbar>
+                            <v-divider />
+                            <v-card-text>
+                              <v-list subheader>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >Title:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title>{{
+                                      editedItem.noticeTitle
+                                    }}</v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >Text:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title>{{
+                                      editedItem.noticeText
+                                    }}</v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >Open Date:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title>{{
+                                      editedItem.openDate
+                                    }}</v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile>
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >Close Date:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title>{{
+                                      editedItem.closeDate
+                                    }}</v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                              </v-list>
+                            </v-card-text>
+                          </v-card>
                         </v-flex>
                       </v-layout>
                     </v-container>
@@ -850,7 +876,7 @@
             flat
             large
             round
-            @click="addSolicitation"
+            @click="submit"
             >{{ buttonText
             }}<v-icon right>{{
               step === 4 ? 'mdi-cloud-upload' : 'mdi-chevron-right'
@@ -859,10 +885,19 @@
         </v-layout>
       </v-footer>
     </v-dialog>
+    <input
+      ref="files"
+      type="file"
+      name="uri"
+      class="hidden"
+      multiple
+      @change="onFilesAdded"
+    />
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import { mapGetters } from 'vuex'
 export default {
   components: {},
@@ -870,6 +905,7 @@ export default {
     return {
       search: '',
       results: [],
+      files: [],
       dialog: false,
       step: 1,
       filter: 'all',
@@ -941,6 +977,138 @@ export default {
     this.results = this.solicitations
   },
   methods: {
+    fileSize(size) {
+      const modifiedSize = size / 1024 / 1024
+      return modifiedSize.toPrecision(2)
+    },
+    addFiles() {
+      // called when file upload is clicked
+      this.$refs.files.click()
+    },
+    clearFiles() {
+      this.files = []
+      // this.validInfo = false
+    },
+    handleFileDelete(file) {
+      this.fileDeleteDialog = true
+      this.deleteIndex = this.files.indexOf(file)
+    },
+    deleteFile() {
+      this.files.splice(this.deleteIndex, 1)
+      this.fileDeleteDialog = false
+      this.deleteIndex = null
+    },
+
+    removeFile(item) {
+      // called when remove file is clicked in file upload component
+      const index = this.files.indexOf(item)
+      this.files.splice(index, 1)
+      this.fileDialog = false
+    },
+    handleDragDropUpload(e) {
+      this.dragging = false // set dropzone state to ready
+
+      const droppedFiles = e.dataTransfer.files
+      for (let i = 0; i < droppedFiles.length; i++) {
+        this.files.push(droppedFiles[i])
+      }
+    },
+    onFilesAdded() {
+      const uploadedFiles = this.$refs.files.files
+
+      // add files to array
+      for (let i = 0; i < uploadedFiles.length; i++) {
+        const file = uploadedFiles[i]
+        this.files.push(file)
+      }
+    },
+    submit() {
+      const formData = new FormData()
+
+      for (let i = 0; i < this.files.length; i++) {
+        const file = this.files[i]
+        formData.append('uri', file)
+      }
+
+      // formData.append('uri')
+      // formData.append(Object.assign({}, this.editedItem))
+
+      formData.append(
+        'mdeContactFirstName',
+        this.editedItem.mdeContactFirstName
+      )
+      formData.append(
+        '        mdeContactLastName',
+        this.editedItem.mdeContactLastName
+      )
+      formData.append(
+        '        mdeContactPhone',
+        this.editedItem.mdeContactPhone
+      )
+      formData.append(
+        '        mdeContactEmail',
+        this.editedItem.mdeContactEmail
+      )
+      formData.append('vendorName', this.editedItem.vendorName)
+      formData.append(
+        '        vendorContactFirstName',
+        this.editedItem.vendorContactFirstName
+      )
+      formData.append(
+        '        vendorContactLastName',
+        this.editedItem.vendorContactLastName
+      )
+      formData.append(
+        '        vendorContactPhone',
+        this.editedItem.vendorContactPhone
+      )
+      formData.append(
+        '        vendorContactEmail',
+        this.editedItem.vendorContactEmail
+      )
+      formData.append('programOffice', this.editedItem.programOffice)
+      formData.append('noticeTitle', this.editedItem.noticeTitle)
+      formData.append('noticeText', this.editedItem.noticeText)
+      formData.append('noticeType', this.editedItem.noticeType)
+      formData.append('requestType', this.editedItem.requestType)
+      formData.append('openDate', this.editedItem.openDate)
+      formData.append('closeDate', this.editedItem.closeDate)
+
+      // formData.append('vendorName', this.vendorName)
+      // formData.append('contactFirstName', this.contactFirstName)
+      // formData.append('contactLastName', this.contactLastName)
+      // formData.append('contactEmail', this.contactEmail)
+      // formData.append('contactPhone', this.contactPhone)
+      // formData.append('noticeTitle', this.noticeTitle)
+      // formData.append('noticeText', this.noticeText)
+
+      axios
+        .post(
+          'http://0.0.0.0:3030/submissions',
+          // 'https://mde-procurement-api.azurewebsites.net/submissions',
+          formData,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' }
+            // onUploadProgress: function(progressEvent) {
+            //   this.uploadPercentage = parseInt(
+            //     Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            //   );
+            // }.bind(this)
+          }
+        )
+        .then(response => {
+          // eslint-disable-next-line no-console
+          console.log('response files', response.data.files)
+          this.uploadedFiles = response.data.files
+          this.uploadId = response.data._id
+          this.submissionTime = response.data.createdAt
+          this.formResponse = response.data
+          // this.step = 6
+        })
+        .catch(function() {
+          this.loading = false
+        })
+    },
     editItem(item) {
       // this.editedIndex = this.solicitations.indexOf(item)
       this.editedItem = Object.assign({}, item)
@@ -963,3 +1131,10 @@ export default {
   }
 }
 </script>
+
+<style>
+input[type='file'] {
+  position: absolute;
+  top: -500px;
+}
+</style>
