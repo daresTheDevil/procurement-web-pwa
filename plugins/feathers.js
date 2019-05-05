@@ -8,7 +8,8 @@ import io from 'socket.io-client'
 // const host = 'localhost'
 // const port = '3030'
 
-const api = process.env.apiUrl
+const api = 'http://e87adf54.ngrok.io'
+// const api = process.env.apiUrl
 
 const socket = io(api)
 // const socket = io('http://0.0.0.0:3030')
