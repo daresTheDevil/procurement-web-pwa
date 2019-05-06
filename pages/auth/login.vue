@@ -24,17 +24,19 @@
                   :type="showPassword ? 'text' : 'password'"
                   @click:append="showPassword = !showPassword"
                 />
-                <v-btn block large depressed color="accent" @click="login"
+                <v-btn block round large depressed color="accent" @click="login"
                   ><v-icon left medium>mdi-school</v-icon>Log in</v-btn
                 >
               </v-card-text>
               <v-card-title class="justify-center py-1">
-                <v-divider /><span class="mx-2">OR</span><v-divider />
+                <v-divider class="mx-4 grey" /><span>OR</span
+                ><v-divider class="mx-4 grey" />
               </v-card-title>
               <v-card-text class="pt-0">
                 <v-btn
                   block
                   dark
+                  round
                   depressed
                   color="deep-orange darken-1"
                   @click="login"
@@ -44,6 +46,7 @@
                 <v-btn
                   block
                   dark
+                  round
                   depressed
                   color="light-blue darken-1"
                   @click="login"
@@ -100,6 +103,7 @@
                 <v-btn
                   block
                   dark
+                  round
                   depressed
                   color="deep-orange darken-1"
                   @click="login"
@@ -109,6 +113,7 @@
                 <v-btn
                   block
                   dark
+                  round
                   depressed
                   color="light-blue darken-1"
                   @click="login"

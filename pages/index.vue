@@ -662,6 +662,59 @@
                         </h2>
                       </v-card-text>
                     </v-card>
+                    <v-slide-y-transition>
+                      <v-card
+                        v-if="files.length > 0"
+                        color="info"
+                        class="mx-5"
+                        flat
+                      >
+                        <v-card-text>
+                          <v-list
+                            v-for="(file, x) in files"
+                            :key="x"
+                            dense
+                            light
+                          >
+                            <v-list-tile>
+                              <v-list-tile-content>
+                                <v-list-tile-sub-title
+                                  >Filename:</v-list-tile-sub-title
+                                >
+                                <v-list-tile-title>{{
+                                  file.name
+                                }}</v-list-tile-title>
+                              </v-list-tile-content>
+
+                              <v-list-tile-action>
+                                <v-icon
+                                  color="error"
+                                  @click="handleFileDelete(file)"
+                                  >mdi-delete</v-icon
+                                >
+                              </v-list-tile-action>
+                            </v-list-tile>
+                          </v-list>
+                        </v-card-text>
+                      </v-card>
+                    </v-slide-y-transition>
+                    <v-dialog v-model="fileDeleteDialog" width="400">
+                      <v-card color="error" dark>
+                        <v-card-title><h2>Delete File?</h2></v-card-title>
+                        <v-card-actions class="justify-space-between">
+                          <v-btn
+                            light
+                            color="white"
+                            depressed
+                            @click="fileDeleteDialog = false"
+                            >Cancel</v-btn
+                          >
+                          <v-btn color="white" outline @click="deleteFile"
+                            >Delete it</v-btn
+                          >
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -851,12 +904,244 @@
               </v-container>
             </v-card-text>
           </v-window-item>
+
+          <v-window-item :value="5">
+            <v-card-text>
+              <v-container fill-height grid-list-md>
+                <v-layout fill-height row justify-center align-center>
+                  <v-flex xs8>
+                    <div ref="capture">
+                      <h1>Submission received!</h1>
+                      <br />
+                      <v-container fluid class="py-0">
+                        <v-layout row wrap>
+                          <v-flex xs6>
+                            <v-card>
+                              <v-toolbar dense light card>
+                                <h3>Vendor Information Received:</h3>
+                              </v-toolbar>
+                              <v-divider />
+                              <v-card-text>
+                                <v-list subheader>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Vendor/DBA Name:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        formResponse.vendorName
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Vendor Contact
+                                        Name:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title
+                                        >{{
+                                          formResponse.vendorContactFirstName
+                                        }}
+                                        {{
+                                          formResponse.vendorContactLastName
+                                        }}</v-list-tile-title
+                                      >
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Vendor Contact
+                                        Email:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title
+                                        >{{ formResponse.vendorContactEmail }}
+                                      </v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Vendor Contact
+                                        Phone:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title
+                                        >{{ formResponse.vendorContactPhone }}
+                                      </v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                </v-list>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex xs6>
+                            <v-card>
+                              <v-toolbar dense card light>
+                                <h3>MDE Contact Information:</h3>
+                              </v-toolbar>
+                              <v-divider />
+                              <v-card-text>
+                                <v-list subheader>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >MDE Program
+                                        Office:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        formResponse.programOffice
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >MDE Contact
+                                        Name:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title
+                                        >{{ formResponse.mdeContactFirstName }}
+                                        {{
+                                          formResponse.mdeContactLastName
+                                        }}</v-list-tile-title
+                                      >
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Vendor Contact
+                                        Email:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title
+                                        >{{ formResponse.mdeContactEmail }}
+                                      </v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >MDE Contact
+                                        Phone:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title
+                                        >{{ formResponse.mdeContactPhone }}
+                                      </v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                </v-list>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+
+                          <v-flex xs6>
+                            <v-card>
+                              <v-toolbar card light dense>
+                                <h3>
+                                  {{ formResponse.noticeType }} Information:
+                                </h3>
+                              </v-toolbar>
+                              <v-divider />
+                              <v-card-text>
+                                <v-list subheader>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Submission ID:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        formResponse._id
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Title:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        formResponse.noticeTitle
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Open Date:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        formResponse.openDate
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Close Date:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        formResponse.closeDate
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                </v-list>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex xs6>
+                            <v-card>
+                              <v-toolbar card light dense>
+                                <h3>
+                                  Files received:
+                                </h3>
+                              </v-toolbar>
+                              <v-divider />
+                              <v-card-text>
+                                <v-list subheader>
+                                  <v-list-tile
+                                    v-for="(file, x) in files"
+                                    :key="x"
+                                  >
+                                    <v-list-tile-avatar>
+                                      <v-icon>mdi-check</v-icon>
+                                    </v-list-tile-avatar>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Filename:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        file.name
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                </v-list>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </div>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card-text>
+          </v-window-item>
         </v-window>
       </v-card>
       <v-footer light height="auto" absolute>
         <v-layout justify-center>
-          <v-btn color="error" flat large round @click="step--"
+          <v-btn v-if="step < 5" color="error" flat large round @click="step--"
             ><v-icon left>mdi-chevron-left</v-icon>Back</v-btn
+          >
+          <v-btn
+            v-if="step === 5"
+            color="error"
+            flat
+            large
+            round
+            @click="dialog = false"
+            ><v-icon left>mdi-close</v-icon>Close</v-btn
           >
           <v-btn
             v-if="step < 4"
@@ -882,6 +1167,15 @@
               step === 4 ? 'mdi-cloud-upload' : 'mdi-chevron-right'
             }}</v-icon></v-btn
           >
+          <v-btn
+            v-if="step === 5"
+            class="primary"
+            flat
+            large
+            round
+            @click="print"
+            >{{ buttonText }}<v-icon right>mdi-printer</v-icon></v-btn
+          >
         </v-layout>
       </v-footer>
     </v-dialog>
@@ -899,6 +1193,8 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+import html2canvas from 'html2canvas'
+
 export default {
   components: {},
   data() {
@@ -907,7 +1203,13 @@ export default {
       results: [],
       files: [],
       dialog: false,
+      fileDeleteDialog: false,
       step: 1,
+      dragging: false,
+      uploadedFiles: [],
+      uploadId: '',
+      submissionTime: '',
+      formResponse: [],
       filter: 'all',
       editedItem: {
         mdeContactFirstName: '',
@@ -960,6 +1262,7 @@ export default {
     },
     buttonText() {
       if (this.step === 4) return 'Submit response to MDE'
+      if (this.step === 5) return 'Print verification'
       return 'next'
     },
     filteredSolicitations() {
@@ -998,7 +1301,19 @@ export default {
       this.fileDeleteDialog = false
       this.deleteIndex = null
     },
-
+    print() {
+      html2canvas(this.$refs.capture)
+        .then(canvas => {
+          this.printFile = canvas.toDataURL()
+          window.open(this.printFile)
+        })
+        .catch(error => {
+          alert(error)
+        })
+        .then(this.$router.replace('/'))
+      // this.$router.replace("/")
+      // this.printSnackbar = true
+    },
     removeFile(item) {
       // called when remove file is clicked in file upload component
       const index = this.files.indexOf(item)
@@ -1037,35 +1352,16 @@ export default {
         'mdeContactFirstName',
         this.editedItem.mdeContactFirstName
       )
-      formData.append(
-        '        mdeContactLastName',
-        this.editedItem.mdeContactLastName
-      )
-      formData.append(
-        '        mdeContactPhone',
-        this.editedItem.mdeContactPhone
-      )
-      formData.append(
-        '        mdeContactEmail',
-        this.editedItem.mdeContactEmail
-      )
+      formData.append('mdeContactLastName', this.editedItem.mdeContactLastName)
+      formData.append('mdeContactPhone', this.editedItem.mdeContactPhone)
+      formData.append('mdeContactEmail', this.editedItem.mdeContactEmail)
       formData.append('vendorName', this.editedItem.vendorName)
-      formData.append(
-        '        vendorContactFirstName',
-        this.editedItem.vendorContactFirstName
-      )
-      formData.append(
-        '        vendorContactLastName',
-        this.editedItem.vendorContactLastName
-      )
-      formData.append(
-        '        vendorContactPhone',
-        this.editedItem.vendorContactPhone
-      )
-      formData.append(
-        '        vendorContactEmail',
-        this.editedItem.vendorContactEmail
-      )
+      // eslint-disable-next-line prettier/prettier
+      formData.append('vendorContactFirstName', this.editedItem.vendorContactFirstName)
+      // eslint-disable-next-line prettier/prettier
+      formData.append('vendorContactLastName', this.editedItem.vendorContactLastName)
+      formData.append('vendorContactPhone', this.editedItem.vendorContactPhone)
+      formData.append('vendorContactEmail', this.editedItem.vendorContactEmail)
       formData.append('programOffice', this.editedItem.programOffice)
       formData.append('noticeTitle', this.editedItem.noticeTitle)
       formData.append('noticeText', this.editedItem.noticeText)
@@ -1084,7 +1380,7 @@ export default {
 
       axios
         .post(
-          'http://0.0.0.0:3030/submissions',
+          'https://c65b7304.ngrok.io/submissions',
           // 'https://mde-procurement-api.azurewebsites.net/submissions',
           formData,
           {
@@ -1103,7 +1399,7 @@ export default {
           this.uploadId = response.data._id
           this.submissionTime = response.data.createdAt
           this.formResponse = response.data
-          // this.step = 6
+          this.step = 5
         })
         .catch(function() {
           this.loading = false

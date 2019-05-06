@@ -93,7 +93,7 @@
       <nuxt />
     </v-content>
     <v-snackbar v-model="showSnack" color="success" top :timeout="2000">
-      <h3>Succesfully logged in!</h3>
+      Successfully logged in!
     </v-snackbar>
   </v-app>
 </template>

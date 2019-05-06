@@ -75,7 +75,9 @@
               <template slot="items" slot-scope="props">
                 <tr @click="props.expanded = !props.expanded">
                   <td>{{ props.item._id }}</td>
-                  <td class="text-xs-left">{{ props.item.contactEmail }}</td>
+                  <td class="text-xs-left">
+                    {{ props.item.vendorContactEmail }}
+                  </td>
                   <td class="text-xs-left">{{ props.item.vendorName }}</td>
                   <td class="text-xs-left">{{ props.item.noticeTitle }}</td>
                   <td class="text-xs-right">
