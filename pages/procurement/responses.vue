@@ -155,9 +155,6 @@ export default {
       ]
     }
   },
-  async fetch({ store, params }) {
-    await store.dispatch('getSubmissions')
-  },
   middleware: 'authenticated',
   layout: 'procurement',
   computed: {
@@ -194,6 +191,9 @@ export default {
       )
     }
   },
+  async fetch({ store, params }) {
+    await store.dispatch('getSubmissions')
+  },
   created() {
     this.results = this.submissions
   },
@@ -204,8 +204,9 @@ export default {
           item.noticeTitle.toLowerCase().indexOf(this.search.toLowerCase()) >
             -1 ||
           item._id.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
-          item.contactEmail.toLowerCase().indexOf(this.search.toLowerCase()) >
-            -1
+          item.vendorContactEmail
+            .toLowerCase()
+            .indexOf(this.search.toLowerCase()) > -1
       )
     },
     fetchSubmissions() {

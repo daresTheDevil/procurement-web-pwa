@@ -861,9 +861,6 @@ export default {
       uploadId: ''
     }
   },
-  async fetch({ store, params }) {
-    await store.dispatch('callSolicitation')
-  },
   computed: {
     ...mapGetters({ solicitation: 'getSolicitation' }),
     formatPhoneNumber() {
@@ -902,6 +899,9 @@ export default {
           return 'Submit response'
       }
     }
+  },
+  async fetch({ store, params }) {
+    await store.dispatch('callSolicitation')
   },
   created() {
     if (this.solicitation.length === 0) return this.$nuxt.$router.push('/')
@@ -1012,7 +1012,8 @@ export default {
 
       axios
         .post(
-          'http://0.0.0.0:3030/submissions',
+          '172.16.100.56:3030',
+          // 'http://0.0.0.0:3030/submissions',
           // 'https://mde-procurement-api.azurewebsites.net/submissions',
           formData,
           {

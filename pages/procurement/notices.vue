@@ -1,512 +1,652 @@
 <template>
-  <v-container grid-list-lg fluid>
-    <v-layout row>
-      <v-flex>
-        <v-layout class="justify-space-between align-center ma-2">
-          <h1 class="display-1 grey--text text--darken-3">Solicitations</h1>
-          <v-btn color="primary" @click="addItem">Add new</v-btn>
-        </v-layout>
-        <v-dialog v-model="deleteDialog" max-width="400">
-          <v-card color="error" dark>
-            <v-card-text>
-              <h1 class="body-1">
-                Are you sure you want to delete this notice?
-              </h1>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn dark outline @click="deleteDialog = false">Cancel</v-btn>
-              <v-btn light @click="deleteItem()">Delete</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog
-          v-model="dialog"
-          fullscreen
-          hide-overlay
-          transition="dialog-bottom-transition"
-        >
-          <v-card color="white" height="100%">
-            <v-toolbar prominent extended dark color="primary">
-              <v-btn icon dark @click="dialog = false">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-              <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
-              <v-layout slot="extension" class="justify-center">
-                <v-list class="transparent">
-                  <v-list-tile
-                    :class="step === 1 ? 'primary lighten-1' : 'transparent'"
-                  >
-                    <v-list-tile-avatar
-                      size="36"
-                      :color="step > 1 ? 'success' : 'info'"
-                      class="white--text font-weight-bold"
-                      ><v-icon v-if="step > 1">mdi-check</v-icon
-                      ><span v-else>1</span></v-list-tile-avatar
+  <div>
+    <v-container fluid class="pb-0">
+      <h1 class="display-1">Solicitations</h1>
+    </v-container>
+    <v-container grid-list-lg fluid class="pb-0">
+      <v-layout row>
+        <v-flex>
+          <v-dialog v-model="deleteDialog" max-width="400">
+            <v-card color="error" dark>
+              <v-card-text>
+                <h1 class="body-1">
+                  Are you sure you want to delete this notice?
+                </h1>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn dark outline @click="deleteDialog = false">Cancel</v-btn>
+                <v-btn light @click="deleteItem()">Delete</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-dialog
+            v-model="dialog"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+          >
+            <v-card color="white" height="100%">
+              <v-toolbar prominent extended dark color="primary">
+                <v-btn icon dark @click="dialog = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
+                <v-layout slot="extension" class="justify-center">
+                  <v-list class="transparent">
+                    <v-list-tile
+                      :class="step === 1 ? 'primary lighten-1' : 'transparent'"
                     >
-                    <v-list-tile-content>
-                      <v-list-tile-sub-title class="caption">
-                        Step One
-                      </v-list-tile-sub-title>
-                      <v-list-tile-title class="subheading font-weight-bold">
-                        Contact Information
-                      </v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-                <v-list class="transparent">
-                  <v-list-tile
-                    :class="step === 2 ? 'primary lighten-1' : 'transparent'"
-                  >
-                    <v-list-tile-avatar
-                      size="36"
-                      :color="step > 2 ? 'success' : 'info'"
-                      class="white--text font-weight-bold"
-                      ><v-icon v-if="step > 2">mdi-check</v-icon
-                      ><span v-else>2</span></v-list-tile-avatar
+                      <v-list-tile-avatar
+                        size="36"
+                        :color="step > 1 ? 'success' : 'info'"
+                        class="white--text font-weight-bold"
+                        ><v-icon v-if="step > 1">mdi-check</v-icon
+                        ><span v-else>1</span></v-list-tile-avatar
+                      >
+                      <v-list-tile-content>
+                        <v-list-tile-sub-title class="caption">
+                          Step One
+                        </v-list-tile-sub-title>
+                        <v-list-tile-title class="subheading font-weight-bold">
+                          Contact Information
+                        </v-list-tile-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </v-list>
+                  <v-list class="transparent">
+                    <v-list-tile
+                      :class="step === 2 ? 'primary lighten-1' : 'transparent'"
                     >
-                    <v-list-tile-content>
-                      <v-list-tile-sub-title class="caption">
-                        Step Two
-                      </v-list-tile-sub-title>
-                      <v-list-tile-title class="subheading font-weight-bold">
-                        Notification Information
-                      </v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-                <v-list class="transparent">
-                  <v-list-tile
-                    :class="step === 3 ? 'primary lighten-1' : 'transparent'"
-                  >
-                    <v-list-tile-avatar
-                      size="36"
-                      :color="step > 3 ? 'success' : 'info'"
-                      class="white--text font-weight-bold"
-                      ><v-icon v-if="step > 3">mdi-check</v-icon
-                      ><span v-else>3</span></v-list-tile-avatar
+                      <v-list-tile-avatar
+                        size="36"
+                        :color="step > 2 ? 'success' : 'info'"
+                        class="white--text font-weight-bold"
+                        ><v-icon v-if="step > 2">mdi-check</v-icon
+                        ><span v-else>2</span></v-list-tile-avatar
+                      >
+                      <v-list-tile-content>
+                        <v-list-tile-sub-title class="caption">
+                          Step Two
+                        </v-list-tile-sub-title>
+                        <v-list-tile-title class="subheading font-weight-bold">
+                          Notification Information
+                        </v-list-tile-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </v-list>
+                  <v-list class="transparent">
+                    <v-list-tile
+                      :class="step === 3 ? 'primary lighten-1' : 'transparent'"
                     >
-                    <v-list-tile-content>
-                      <v-list-tile-sub-title class="caption">
-                        Step Three
-                      </v-list-tile-sub-title>
-                      <v-list-tile-title class="subheading font-weight-bold">
-                        Upload Files
-                      </v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-                <v-list class="transparent">
-                  <v-list-tile
-                    :class="step === 4 ? 'primary lighten-1' : 'transparent'"
-                  >
-                    <v-list-tile-avatar
-                      size="36"
-                      color="info"
-                      class="white--text font-weight-bold"
-                      >4</v-list-tile-avatar
+                      <v-list-tile-avatar
+                        size="36"
+                        :color="step > 3 ? 'success' : 'info'"
+                        class="white--text font-weight-bold"
+                        ><v-icon v-if="step > 3">mdi-check</v-icon
+                        ><span v-else>3</span></v-list-tile-avatar
+                      >
+                      <v-list-tile-content>
+                        <v-list-tile-sub-title class="caption">
+                          Step Three
+                        </v-list-tile-sub-title>
+                        <v-list-tile-title class="subheading font-weight-bold">
+                          Upload Files
+                        </v-list-tile-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </v-list>
+                  <v-list class="transparent">
+                    <v-list-tile
+                      :class="step === 4 ? 'primary lighten-1' : 'transparent'"
                     >
-                    <v-list-tile-content>
-                      <v-list-tile-sub-title class="caption">
-                        Step Four
-                      </v-list-tile-sub-title>
-                      <v-list-tile-title class="subheading font-weight-bold">
-                        Notification Verification
-                      </v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-              </v-layout>
-            </v-toolbar>
+                      <v-list-tile-avatar
+                        size="36"
+                        color="info"
+                        class="white--text font-weight-bold"
+                        >4</v-list-tile-avatar
+                      >
+                      <v-list-tile-content>
+                        <v-list-tile-sub-title class="caption">
+                          Step Four
+                        </v-list-tile-sub-title>
+                        <v-list-tile-title class="subheading font-weight-bold">
+                          Notification Verification
+                        </v-list-tile-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </v-list>
+                </v-layout>
+              </v-toolbar>
 
-            <v-window v-model="step">
-              <v-window-item :value="1">
-                <v-card-text>
-                  <v-container fill-height>
-                    <v-layout fill-height row justify-center align-center>
-                      <v-flex xs8>
-                        <h1>Contact Information</h1>
-                        <br />
-                        <v-text-field
-                          v-model="editedItem.mdeContactFirstName"
-                          outline
-                          label="MDE Contact First Name"
-                        />
-                        <v-text-field
-                          v-model="editedItem.mdeContactLastName"
-                          outline
-                          label=" MDE Contact Last Name"
-                        />
-                        <v-text-field
-                          v-model="editedItem.mdeContactEmail"
-                          outline
-                          label="MDE Contact Email"
-                        />
-                        <v-text-field
-                          v-model="editedItem.mdeContactPhone"
-                          outline
-                          label="MDE Contact Phone"
-                          type="tel"
-                          mask="phone"
-                        />
-                        <v-select
-                          outline
-                          label="Select program office"
-                          :items="programOffices"
-                        />
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-                </v-card-text>
-              </v-window-item>
-              <v-window-item :value="2">
-                <v-card-text>
-                  <v-container fill-height>
-                    <v-layout fill-height row justify-center align-center>
-                      <v-flex xs8>
-                        <h1>Notification Information</h1>
-                        <br />
-                        <v-text-field
-                          v-model="editedItem.noticeTitle"
-                          outline
-                          label="Notice Title"
-                        />
-                        <v-textarea
-                          v-model="editedItem.noticeText"
-                          outline
-                          label="Notice Summary"
-                        />
-                        <v-select
-                          v-model="editedItem.requestType"
-                          outline
-                          label="Request Type"
-                          :items="['RFA', 'RFP', 'IFB']"
-                        />
-                        <v-select
-                          v-model="editedItem.noticeType"
-                          outline
-                          label="Notice Type"
-                          :items="['Contract', 'Grant']"
-                        />
-                        <v-text-field outline label="Notice ID" />
-                        <v-layout row>
-                          <v-flex class="mr-1">
-                            <v-menu
-                              ref="openDateMenu"
-                              v-model="openDateMenu"
-                              :close-on-content-click="false"
-                              :nudge-right="40"
-                              :return-value.sync="editedItem.openDate"
-                              lazy
-                              transition="scale-transition"
-                              offset-y
-                              full-width
-                              min-width="290px"
-                            >
-                              <template v-slot:activator="{ on }">
-                                <v-text-field
+              <v-window v-model="step">
+                <v-window-item :value="1">
+                  <v-card-text>
+                    <v-container fill-height>
+                      <v-layout fill-height row justify-center align-center>
+                        <v-flex xs8>
+                          <h1>Contact Information</h1>
+                          <br />
+                          <v-text-field
+                            v-model="editedItem.mdeContactFirstName"
+                            outline
+                            label="MDE Contact First Name"
+                          />
+                          <v-text-field
+                            v-model="editedItem.mdeContactLastName"
+                            outline
+                            label=" MDE Contact Last Name"
+                          />
+                          <v-text-field
+                            v-model="editedItem.mdeContactEmail"
+                            outline
+                            label="MDE Contact Email"
+                          />
+                          <v-text-field
+                            v-model="editedItem.mdeContactPhone"
+                            outline
+                            label="MDE Contact Phone"
+                            type="tel"
+                            mask="phone"
+                          />
+                          <v-select
+                            v-model="editedItem.programOffice"
+                            outline
+                            label="Select program office"
+                            :items="programOffices"
+                          />
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </v-card-text>
+                </v-window-item>
+                <v-window-item :value="2">
+                  <v-card-text>
+                    <v-container fill-height>
+                      <v-layout fill-height row justify-center align-center>
+                        <v-flex xs8>
+                          <h1>Notification Information</h1>
+                          <br />
+                          <v-text-field
+                            v-model="editedItem.noticeTitle"
+                            outline
+                            label="Notice Title"
+                          />
+                          <v-textarea
+                            v-model="editedItem.noticeText"
+                            outline
+                            label="Notice Summary"
+                          />
+                          <v-select
+                            v-model="editedItem.requestType"
+                            outline
+                            label="Request Type"
+                            :items="['RFA', 'RFP', 'IFB']"
+                          />
+                          <v-select
+                            v-model="editedItem.noticeType"
+                            outline
+                            label="Notice Type"
+                            :items="['Contract', 'Grant']"
+                          />
+                          <v-text-field outline label="Notice ID" />
+                          <v-layout row>
+                            <v-flex class="mr-1">
+                              <v-menu
+                                ref="openDateMenu"
+                                v-model="openDateMenu"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                :return-value.sync="editedItem.openDate"
+                                lazy
+                                transition="scale-transition"
+                                offset-y
+                                full-width
+                                min-width="290px"
+                              >
+                                <template v-slot:activator="{ on }">
+                                  <v-text-field
+                                    v-model="editedItem.openDate"
+                                    outline
+                                    label="Select notice open date"
+                                    append-icon="event"
+                                    readonly
+                                    v-on="on"
+                                  ></v-text-field>
+                                </template>
+                                <v-date-picker
                                   v-model="editedItem.openDate"
-                                  outline
-                                  label="Select notice open date"
-                                  append-icon="event"
-                                  readonly
-                                  v-on="on"
-                                ></v-text-field>
-                              </template>
-                              <v-date-picker
-                                v-model="editedItem.openDate"
-                                no-title
-                                scrollable
+                                  no-title
+                                  scrollable
+                                >
+                                  <v-spacer></v-spacer>
+                                  <v-btn
+                                    flat
+                                    color="primary"
+                                    @click="openDateMenu = false"
+                                    >Cancel</v-btn
+                                  >
+                                  <v-btn
+                                    flat
+                                    color="primary"
+                                    @click="
+                                      $refs.openDateMenu.save(
+                                        editedItem.openDate
+                                      )
+                                    "
+                                    >OK</v-btn
+                                  >
+                                </v-date-picker>
+                              </v-menu>
+                            </v-flex>
+                            <v-flex class="ml-1">
+                              <v-menu
+                                ref="closeDateMenu"
+                                v-model="closeDateMenu"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                :return-value.sync="editedItem.closeDate"
+                                lazy
+                                transition="scale-transition"
+                                offset-y
+                                full-width
+                                min-width="290px"
                               >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                  flat
-                                  color="primary"
-                                  @click="openDateMenu = false"
-                                  >Cancel</v-btn
-                                >
-                                <v-btn
-                                  flat
-                                  color="primary"
-                                  @click="
-                                    $refs.openDateMenu.save(editedItem.openDate)
-                                  "
-                                  >OK</v-btn
-                                >
-                              </v-date-picker>
-                            </v-menu>
-                          </v-flex>
-                          <v-flex class="ml-1">
-                            <v-menu
-                              ref="closeDateMenu"
-                              v-model="closeDateMenu"
-                              :close-on-content-click="false"
-                              :nudge-right="40"
-                              :return-value.sync="editedItem.closeDate"
-                              lazy
-                              transition="scale-transition"
-                              offset-y
-                              full-width
-                              min-width="290px"
-                            >
-                              <template v-slot:activator="{ on }">
-                                <v-text-field
+                                <template v-slot:activator="{ on }">
+                                  <v-text-field
+                                    v-model="editedItem.closeDate"
+                                    outline
+                                    label="Select notice close date"
+                                    append-icon="event"
+                                    readonly
+                                    v-on="on"
+                                  ></v-text-field>
+                                </template>
+                                <v-date-picker
                                   v-model="editedItem.closeDate"
-                                  outline
-                                  label="Select notice close date"
-                                  append-icon="event"
-                                  readonly
-                                  v-on="on"
-                                ></v-text-field>
-                              </template>
-                              <v-date-picker
-                                v-model="editedItem.closeDate"
-                                no-title
-                                scrollable
-                              >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                  flat
-                                  color="primary"
-                                  @click="closeDateMenu = false"
-                                  >Cancel</v-btn
+                                  no-title
+                                  scrollable
                                 >
-                                <v-btn
-                                  flat
-                                  color="primary"
-                                  @click="
-                                    $refs.closeDateMenu.save(
-                                      editedItem.closeDate
-                                    )
-                                  "
-                                  >OK</v-btn
-                                >
-                              </v-date-picker>
-                            </v-menu>
-                          </v-flex>
-                        </v-layout>
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-                </v-card-text>
-              </v-window-item>
-              <v-window-item :value="3">
-                <v-card-text>
-                  <v-container fill-height>
-                    <v-layout fill-height row justify-center align-center>
-                      <v-flex xs8>
-                        <h1>Upload Files</h1>
-                        <br />
-                        <v-card
-                          dark
-                          :color="dragging ? 'success' : 'info'"
-                          hover
-                          class="mx-5"
-                          :class="dragging ? 'elevation-10' : 'elevation-0'"
-                        >
-                          <!-- @drop.stop.prevent="handleDragDropUpload"
+                                  <v-spacer></v-spacer>
+                                  <v-btn
+                                    flat
+                                    color="primary"
+                                    @click="closeDateMenu = false"
+                                    >Cancel</v-btn
+                                  >
+                                  <v-btn
+                                    flat
+                                    color="primary"
+                                    @click="
+                                      $refs.closeDateMenu.save(
+                                        editedItem.closeDate
+                                      )
+                                    "
+                                    >OK</v-btn
+                                  >
+                                </v-date-picker>
+                              </v-menu>
+                            </v-flex>
+                          </v-layout>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </v-card-text>
+                </v-window-item>
+                <v-window-item :value="3">
+                  <v-card-text>
+                    <v-container fill-height>
+                      <v-layout fill-height row justify-center align-center>
+                        <v-flex xs8>
+                          <h1>Upload Files</h1>
+                          <br />
+                          <v-card
+                            dark
+                            :color="dragging ? 'success' : 'info'"
+                            hover
+                            class="mx-5"
+                            :class="dragging ? 'elevation-10' : 'elevation-0'"
+                          >
+                            <!-- @drop.stop.prevent="handleDragDropUpload"
                         @dragenter.stop.prevent="dragging = true"
                         @dragover.stop.prevent="dragging = true"
                         @dragleave.stop.prevent="dragging = false"
                         @click="addFiles" -->
-                          <v-card-text
-                            class="text--white text-xs-center"
-                            style="border-style: dashed border-color: coral; border-width: 7px;"
-                          >
-                            <v-icon size="64">mdi-cloud-upload</v-icon>
-                            <h2>
-                              Click or drag and drop files here
-                            </h2>
-                          </v-card-text>
-                        </v-card>
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-                </v-card-text>
-              </v-window-item>
-              <v-window-item :value="4">
-                <v-card-text>
-                  <v-container fill-height>
-                    <v-layout fill-height row justify-center align-center>
-                      <v-flex xs8>
-                        <h1>Verify Information</h1>
-                        <br />
-                        <h3>
-                          Name: {{ editedItem.mdeContactFirstName }}
-                          {{ editedItem.mdeContactLastName }}
-                        </h3>
-                        <h3>
-                          Contact: {{ editedItem.mdeContactPhone }}
-                          {{ editedItem.mdeContactEmail }}
-                        </h3>
-                        <h3>
-                          Title: {{ editedItem.noticeTitle }}
-                          {{ editedItem.noticeText }}
-                        </h3>
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-                </v-card-text>
-              </v-window-item>
-            </v-window>
-          </v-card>
-          <v-footer light height="auto" absolute>
-            <v-layout justify-center>
-              <v-btn color="error" flat large round @click="step--"
-                ><v-icon left>mdi-chevron-left</v-icon>Back</v-btn
-              >
-              <v-btn
-                v-if="step < 4"
-                class="primary"
-                flat
-                large
-                round
-                @click="step++"
-                >{{ buttonText
-                }}<v-icon right>{{
-                  step === 4 ? 'mdi-cloud-upload' : 'mdi-chevron-right'
-                }}</v-icon></v-btn
-              >
-              <v-btn
-                v-if="step === 4"
-                class="primary"
-                flat
-                large
-                round
-                @click="addSolicitation"
-                >{{ buttonText
-                }}<v-icon right>{{
-                  step === 4 ? 'mdi-cloud-upload' : 'mdi-chevron-right'
-                }}</v-icon></v-btn
-              >
-            </v-layout>
-          </v-footer>
-        </v-dialog>
+                            <v-card-text
+                              class="text--white text-xs-center"
+                              style="border-style: dashed border-color: coral; border-width: 7px;"
+                            >
+                              <v-icon size="64">mdi-cloud-upload</v-icon>
+                              <h2>
+                                Click or drag and drop files here
+                              </h2>
+                            </v-card-text>
+                          </v-card>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </v-card-text>
+                </v-window-item>
+                <v-window-item :value="4">
+                  <v-card-text>
+                    <v-container fill-height grid-list-md>
+                      <v-layout fill-height row justify-center align-center>
+                        <v-flex xs8>
+                          <h1>Verify Information</h1>
+                          <br />
+                          <v-container fluid class="py-0">
+                            <v-layout row wrap>
+                              <v-flex xs6>
+                                <v-card>
+                                  <v-toolbar dense card light>
+                                    <h3>MDE Contact Information:</h3>
+                                  </v-toolbar>
+                                  <v-divider />
+                                  <v-card-text>
+                                    <v-list subheader>
+                                      <v-list-tile>
+                                        <v-list-tile-content>
+                                          <v-list-tile-sub-title
+                                            >MDE Program
+                                            Office:</v-list-tile-sub-title
+                                          >
+                                          <v-list-tile-title>{{
+                                            editedItem.programOffice
+                                          }}</v-list-tile-title>
+                                        </v-list-tile-content>
+                                      </v-list-tile>
+                                      <v-list-tile>
+                                        <v-list-tile-content>
+                                          <v-list-tile-sub-title
+                                            >MDE Contact
+                                            Name:</v-list-tile-sub-title
+                                          >
+                                          <v-list-tile-title
+                                            >{{
+                                              editedItem.mdeContactFirstName
+                                            }}
+                                            {{
+                                              editedItem.mdeContactLastName
+                                            }}</v-list-tile-title
+                                          >
+                                        </v-list-tile-content>
+                                      </v-list-tile>
+                                      <v-list-tile>
+                                        <v-list-tile-content>
+                                          <v-list-tile-sub-title
+                                            >Vendor Contact
+                                            Email:</v-list-tile-sub-title
+                                          >
+                                          <v-list-tile-title
+                                            >{{ editedItem.mdeContactEmail }}
+                                          </v-list-tile-title>
+                                        </v-list-tile-content>
+                                      </v-list-tile>
+                                      <v-list-tile>
+                                        <v-list-tile-content>
+                                          <v-list-tile-sub-title
+                                            >MDE Contact
+                                            Phone:</v-list-tile-sub-title
+                                          >
+                                          <v-list-tile-title
+                                            >{{ editedItem.mdeContactPhone }}
+                                          </v-list-tile-title>
+                                        </v-list-tile-content>
+                                      </v-list-tile>
+                                    </v-list>
+                                  </v-card-text>
+                                </v-card>
+                              </v-flex>
 
-        <v-card>
-          <v-toolbar card light>
-            <v-btn-toggle v-model="filter" class="transparent mr-2">
-              <v-btn :value="0" large flat>
-                <v-avatar
-                  size="24"
-                  class="mr-2 white--text"
-                  color="primary"
-                  dark
-                  >{{ solicitations.length }}</v-avatar
+                              <v-flex xs6>
+                                <v-card>
+                                  <v-toolbar card light dense>
+                                    <h3>
+                                      {{ editedItem.noticeType }} Information:
+                                    </h3>
+                                  </v-toolbar>
+                                  <v-divider />
+                                  <v-card-text>
+                                    <v-list subheader>
+                                      <v-list-tile>
+                                        <v-list-tile-content>
+                                          <v-list-tile-sub-title
+                                            >Title:</v-list-tile-sub-title
+                                          >
+                                          <v-list-tile-title>{{
+                                            editedItem.noticeTitle
+                                          }}</v-list-tile-title>
+                                        </v-list-tile-content>
+                                      </v-list-tile>
+                                      <v-list-tile>
+                                        <v-list-tile-content>
+                                          <v-list-tile-sub-title
+                                            >Text:</v-list-tile-sub-title
+                                          >
+                                          <v-list-tile-title>{{
+                                            editedItem.noticeText
+                                          }}</v-list-tile-title>
+                                        </v-list-tile-content>
+                                      </v-list-tile>
+                                      <v-list-tile>
+                                        <v-list-tile-content>
+                                          <v-list-tile-sub-title
+                                            >Open Date:</v-list-tile-sub-title
+                                          >
+                                          <v-list-tile-title>{{
+                                            editedItem.openDate
+                                          }}</v-list-tile-title>
+                                        </v-list-tile-content>
+                                      </v-list-tile>
+                                      <v-list-tile>
+                                        <v-list-tile-content>
+                                          <v-list-tile-sub-title
+                                            >Close Date:</v-list-tile-sub-title
+                                          >
+                                          <v-list-tile-title>{{
+                                            editedItem.closeDate
+                                          }}</v-list-tile-title>
+                                        </v-list-tile-content>
+                                      </v-list-tile>
+                                    </v-list>
+                                  </v-card-text>
+                                </v-card>
+                              </v-flex>
+
+                              <v-flex xs6>
+                                <v-card>
+                                  <v-toolbar card light dense>
+                                    <h3>Attached Files:</h3>
+                                  </v-toolbar>
+                                  <v-divider />
+                                  <v-card-text>
+                                    <v-list subheader>
+                                      <v-list-tile
+                                        v-for="file in files"
+                                        :key="file.filename"
+                                      >
+                                        <v-list-tile-content>
+                                          <v-list-tile-sub-title
+                                            >Title:</v-list-tile-sub-title
+                                          >
+                                          <v-list-tile-title class="caption">{{
+                                            file.name
+                                          }}</v-list-tile-title>
+                                        </v-list-tile-content>
+                                      </v-list-tile>
+                                    </v-list>
+                                  </v-card-text>
+                                </v-card>
+                              </v-flex>
+                            </v-layout>
+                          </v-container>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </v-card-text>
+                </v-window-item>
+              </v-window>
+            </v-card>
+            <v-footer light height="auto" absolute>
+              <v-layout justify-center>
+                <v-btn color="error" flat large round @click="step--"
+                  ><v-icon left>mdi-chevron-left</v-icon>Back</v-btn
                 >
-                All
-              </v-btn>
-              <v-btn :value="1" large flat>
-                <v-avatar
-                  size="24"
-                  class="mr-2 white--text"
-                  color="secondary"
-                  dark
-                  >{{ openSolicitations.length }}</v-avatar
+                <v-btn
+                  v-if="step < 4"
+                  class="primary"
+                  flat
+                  large
+                  round
+                  @click="step++"
+                  >{{ buttonText
+                  }}<v-icon right>{{
+                    step === 4 ? 'mdi-cloud-upload' : 'mdi-chevron-right'
+                  }}</v-icon></v-btn
                 >
-                Open
-              </v-btn>
-              <v-btn :value="2" large flat>
-                <v-avatar
-                  size="24"
-                  class="mr-2 white--text"
-                  color="error"
-                  dark
-                  >{{ closedSolicitations.length }}</v-avatar
+                <v-btn
+                  v-if="step === 4"
+                  class="primary"
+                  flat
+                  large
+                  round
+                  @click="save"
+                  >{{ buttonText
+                  }}<v-icon right>{{
+                    step === 4 ? 'mdi-cloud-upload' : 'mdi-chevron-right'
+                  }}</v-icon></v-btn
                 >
-                Closed
-              </v-btn>
-            </v-btn-toggle>
-            <v-text-field
-              solo
-              background-color="grey lighten-2"
-              prepend-inner-icon="mdi-database-search"
-              flat
-              hide-details
-              placeholder="Filter solicitations"
-              class="mx-2"
-            />
-            <v-spacer />
-          </v-toolbar>
-          <v-data-table
-            :items="filteredSolicitations"
-            :search="search"
-            :headers="headers"
-            item-key="_id"
-          >
-            <template v-slot:headers="props">
-              <tr class="primary">
-                <th
-                  v-for="header in props.headers"
-                  :key="header.text"
-                  class="white--text text-xs-left"
-                >
-                  {{ header.text }}
-                </th>
-              </tr>
-            </template>
-            <template v-slot:items="props">
-              <tr>
-                <td width="200">{{ props.item._id }}</td>
-                <td>
-                  {{ props.item.noticeTitle }}
-                </td>
-                <td width="200">
-                  <v-chip small>{{ props.item.requestType }}</v-chip
-                  ><v-chip small>{{ props.item.noticeType }}</v-chip>
-                </td>
-                <!-- <td>{{ props.item.solicitationType }}</td> -->
-                <td width="250">
-                  {{ props.item.mdeContactFirstName }}
-                  {{ props.item.mdeContactLastName }}<br />{{
-                    props.item.mdeContactEmail
-                  }}
-                </td>
-                <!-- <td>{{ props.item.mdeContactEmail }}</td> -->
-                <td width="100" class="text-xs-center">
-                  {{ new Date(props.item.openDate).toLocaleDateString() }}
-                </td>
-                <td
-                  width="100"
-                  :class="
-                    $moment(props.item.closeDate).isBefore($moment())
-                      ? 'red--text red lighten-5 font-weight-bold'
-                      : ''
-                  "
-                  class="text-xs-center"
-                >
-                  {{ new Date(props.item.closeDate).toLocaleDateString() }}
-                </td>
-                <td
-                  width="50"
-                  class="text-xs-right justify-between-around align-center layout"
-                >
-                  <v-menu offset-y left bottom>
-                    <v-btn slot="activator" icon>
-                      <v-icon>more_vert</v-icon>
-                    </v-btn>
-                    <v-list class="py-0">
-                      <v-list-tile @click="editItem(props.item)">
-                        <v-list-tile-avatar
-                          ><v-icon>mdi-pencil</v-icon></v-list-tile-avatar
-                        >
-                        <v-list-tile-content>
-                          <v-list-tile-title class="subheading"
-                            >Edit</v-list-tile-title
+              </v-layout>
+            </v-footer>
+          </v-dialog>
+
+          <v-card>
+            <v-toolbar card light>
+              <v-btn-toggle v-model="filter" class="transparent mr-2">
+                <v-btn :value="0" large flat>
+                  <v-avatar
+                    size="24"
+                    class="mr-2 white--text"
+                    color="primary"
+                    dark
+                    >{{ solicitations.length }}</v-avatar
+                  >
+                  All
+                </v-btn>
+                <v-btn :value="1" large flat>
+                  <v-avatar
+                    size="24"
+                    class="mr-2 white--text"
+                    color="secondary"
+                    dark
+                    >{{ openSolicitations.length }}</v-avatar
+                  >
+                  Open
+                </v-btn>
+                <v-btn :value="2" large flat>
+                  <v-avatar
+                    size="24"
+                    class="mr-2 white--text"
+                    color="error"
+                    dark
+                    >{{ closedSolicitations.length }}</v-avatar
+                  >
+                  Closed
+                </v-btn>
+              </v-btn-toggle>
+              <v-text-field
+                v-model="search"
+                solo
+                background-color="grey lighten-2"
+                prepend-inner-icon="mdi-database-search"
+                flat
+                hide-details
+                placeholder="Filter solicitations"
+                class="mx-2"
+                @input="searchSolicitations"
+              />
+              <v-spacer />
+              <v-btn color="primary" @click="addItem">Add new</v-btn>
+            </v-toolbar>
+            <v-data-table
+              :items="filteredSolicitations"
+              :search="search"
+              :headers="headers"
+              item-key="_id"
+            >
+              <template v-slot:headers="props">
+                <tr class="primary">
+                  <th
+                    v-for="header in props.headers"
+                    :key="header.text"
+                    class="white--text text-xs-left"
+                  >
+                    {{ header.text }}
+                  </th>
+                </tr>
+              </template>
+              <template v-slot:items="props">
+                <tr>
+                  <td width="200">{{ props.item._id }}</td>
+                  <td>
+                    {{ props.item.noticeTitle }}
+                  </td>
+                  <td width="200">
+                    <v-chip small>{{ props.item.requestType }}</v-chip
+                    ><v-chip small>{{ props.item.noticeType }}</v-chip>
+                  </td>
+                  <!-- <td>{{ props.item.solicitationType }}</td> -->
+                  <td width="250">
+                    {{ props.item.mdeContactFirstName }}
+                    {{ props.item.mdeContactLastName }}<br />{{
+                      props.item.mdeContactEmail
+                    }}
+                  </td>
+                  <!-- <td>{{ props.item.mdeContactEmail }}</td> -->
+                  <td width="100" class="text-xs-center">
+                    {{ new Date(props.item.openDate).toLocaleDateString() }}
+                  </td>
+                  <td
+                    width="100"
+                    :class="
+                      $moment(props.item.closeDate).isBefore($moment())
+                        ? 'red--text red lighten-5 font-weight-bold'
+                        : ''
+                    "
+                    class="text-xs-center"
+                  >
+                    {{ new Date(props.item.closeDate).toLocaleDateString() }}
+                  </td>
+                  <td
+                    width="50"
+                    class="text-xs-right justify-between-around align-center layout"
+                  >
+                    <v-menu offset-y left bottom>
+                      <v-btn slot="activator" icon>
+                        <v-icon>more_vert</v-icon>
+                      </v-btn>
+                      <v-list class="py-0">
+                        <v-list-tile @click="editItem(props.item)">
+                          <v-list-tile-avatar
+                            ><v-icon>mdi-pencil</v-icon></v-list-tile-avatar
                           >
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile @click="handleFileDelete(props.item)">
-                        <v-list-tile-avatar
-                          ><v-icon>mdi-delete</v-icon></v-list-tile-avatar
-                        >
-                        <v-list-tile-title class="subheading"
-                          >Delete</v-list-tile-title
-                        >
-                      </v-list-tile>
-                    </v-list>
-                  </v-menu>
-                </td>
-                <!--   <v-btn flat icon color="grey" @click="editItem(props.item)">
+                          <v-list-tile-content>
+                            <v-list-tile-title class="subheading"
+                              >Edit</v-list-tile-title
+                            >
+                          </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile @click="handleFileDelete(props.item)">
+                          <v-list-tile-avatar
+                            ><v-icon>mdi-delete</v-icon></v-list-tile-avatar
+                          >
+                          <v-list-tile-title class="subheading"
+                            >Delete</v-list-tile-title
+                          >
+                        </v-list-tile>
+                      </v-list>
+                    </v-menu>
+                  </td>
+                  <!--   <v-btn flat icon color="grey" @click="editItem(props.item)">
                     <v-icon>edit</v-icon>
                   </v-btn>
                   <v-btn flat icon color="grey">
@@ -542,26 +682,30 @@
                     </v-card>
                   </v-dialog>
                 </td> -->
-              </tr>
-            </template>
-            <v-alert
-              v-slot:no-results
-              :value="true"
-              color="error"
-              icon="warning"
-            >
-              Your search for "{{ search }}" found no results.
-            </v-alert>
-            <template v-slot:expand="props">
-              <v-card flat color="light-blue lighten-5">
-                <v-card-text v-text="props.item.noticeText" />
-              </v-card>
-            </template>
-          </v-data-table>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+                </tr>
+              </template>
+              <v-alert
+                v-slot:no-results
+                :value="true"
+                color="error"
+                icon="warning"
+              >
+                Your search for "{{ search }}" found no results.
+              </v-alert>
+              <template v-slot:expand="props">
+                <v-card flat color="light-blue lighten-5">
+                  <v-card-text v-text="props.item.noticeText" />
+                </v-card>
+              </template>
+            </v-data-table>
+          </v-card>
+        </v-flex>
+      </v-layout>
+      <v-snackbar v-model="snackbar" multi-line top :color="snackColor">{{
+        snackMessage
+      }}</v-snackbar>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -579,6 +723,10 @@ export default {
       agreement: false,
       testModel: '',
       step: 1,
+      snackbar: false,
+      results: [],
+      snackColor: '',
+      snackMessage: '',
       filter: 0,
       bio:
         'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts',
@@ -732,9 +880,6 @@ export default {
       ]
     }
   },
-  async fetch({ store, params }) {
-    await store.dispatch('callSolicitations')
-  },
   layout: 'procurement',
   computed: {
     formattedOpenDate() {
@@ -751,17 +896,17 @@ export default {
     },
     ...mapGetters({ solicitations: 'getSolicitations' }),
     filteredSolicitations() {
-      if (this.filter === 0) return this.solicitations
+      if (this.filter === 0) return this.results
       else if (this.filter === 1) return this.openSolicitations
       else return this.closedSolicitations
     },
     openSolicitations() {
-      return this.solicitations.filter(item =>
+      return this.results.filter(item =>
         this.$moment(item.closeDate).isAfter(this.$moment())
       )
     },
     closedSolicitations() {
-      return this.solicitations.filter(item =>
+      return this.results.filter(item =>
         this.$moment(item.closeDate).isBefore(this.$moment())
       )
     },
@@ -800,8 +945,26 @@ export default {
       return 'next'
     }
   },
-
+  async fetch({ store, params }) {
+    await store.dispatch('callSolicitations')
+  },
+  created() {
+    this.results = this.solicitations
+  },
   methods: {
+    searchSolicitations() {
+      this.results = this.solicitations.filter(
+        item =>
+          item.noticeTitle.toLowerCase().indexOf(this.search.toLowerCase()) >
+            -1 ||
+          item._id.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
+          item.noticeText.toLowerCase().indexOf(this.search.toLowerCase()) >
+            -1 ||
+          item.mdeContactEmail
+            .toLowerCase()
+            .indexOf(this.search.toLowerCase()) > -1
+      )
+    },
     submit() {
       const formData = new FormData()
 
@@ -892,6 +1055,10 @@ export default {
           programOffice: editedItem.programOffice
         })
         .then(response => {
+          this.showSnack(
+            'success',
+            response.noticeTitle + ' updated successfully!'
+          )
           this.fetchSolicitations()
           this.clearInput()
           this.dialog = false
@@ -915,18 +1082,24 @@ export default {
           closeDate: editedItem.closeDate
         })
         .then(response => {
-          this.$nuxt.$emit('SHOW_SNACK', {
-            color: 'Success',
-            text: 'Added successfully!'
-          })
+          this.showSnack(
+            'success',
+            response.noticeTitle + ' created successfully!'
+          )
           this.fetchSolicitations()
           this.clearInput()
-          this.step = 1
           this.dialog = false
         })
     },
     fetchSolicitations() {
       this.$store.dispatch('callSolicitations')
+      this.results = this.solicitations
+      this.step = 1
+    },
+    showSnack(color, message) {
+      this.snackColor = color
+      this.snackMessage = message
+      this.snackbar = true
     },
     clearInput() {
       this.editedItem.noticeTitle = ''

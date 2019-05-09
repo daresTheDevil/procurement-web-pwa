@@ -123,7 +123,7 @@ export default {
         },
         {
           icon: 'mdi-cube-scan',
-          title: 'Notices',
+          title: 'Solicitations',
           to: '/procurement/notices'
         }
         // { icon: 'mdi-file-document-edit-outline', title: 'Signature Sheets', to: '/procurement/signature' },

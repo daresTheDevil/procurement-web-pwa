@@ -16,7 +16,7 @@
     </v-container>
     <v-container grid-list-lg fluid>
       <v-layout row wrap>
-        <v-flex xs5>
+        <v-flex xs12 md5>
           <v-card>
             <v-toolbar card dark dense color="primary">
               <v-chip dark color="primary"
@@ -188,9 +188,6 @@ export default {
       pickerDate: null
     }
   },
-  async fetch({ store, params }) {
-    await store.dispatch('callSolicitations')
-  },
   layout: 'procurement',
   computed: {
     ...mapGetters({ solicitations: 'getSolicitations' }),
@@ -205,6 +202,9 @@ export default {
     currentMonth() {
       return this.$moment(this.pickerDate, 'YYYY-MM').format('MMMM YYYY')
     }
+  },
+  async fetch({ store, params }) {
+    await store.dispatch('callSolicitations')
   },
   mounted() {
     this.start = this.$moment().format('YYYY-MM-DD')

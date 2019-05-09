@@ -45,18 +45,45 @@ export default {
         commit('SET_USER', user)
       })
   },
+  azure({ commit }, { email, password }) {
+    return (
+      feathers
+        // .authenticate({ strategy: 'local', email, password })
+        .authenticate({ strategy: 'azure', email, password })
+        .then(response => {
+          // eslint-disable-next-line no-console
+          console.log('azure response', response)
+          return feathers.passport.verifyJWT(response.accessToken)
+        })
+        .then(payload => {
+          // eslint-disable-next-line no-console
+          console.log('azure payload', payload)
+          return feathers.service('users').get(payload.userId)
+        })
+        .then(user => {
+          commit('SET_USER', user)
+        })
+    )
+  },
   login({ commit }, { email, password }) {
-    return feathers
-      .authenticate({ strategy: 'local', email, password })
-      .then(response => {
-        return feathers.passport.verifyJWT(response.accessToken)
-      })
-      .then(payload => {
-        return feathers.service('users').get(payload.userId)
-      })
-      .then(user => {
-        commit('SET_USER', user)
-      })
+    return (
+      feathers
+        // .authenticate({ strategy: 'local', email, password })
+        .authenticate({ strategy: 'local', email, password })
+        .then(response => {
+          // eslint-disable-next-line no-console
+          console.log('azure response', response)
+          return feathers.passport.verifyJWT(response.accessToken)
+        })
+        .then(payload => {
+          // eslint-disable-next-line no-console
+          console.log('azure payload', payload)
+          return feathers.service('users').get(payload.userId)
+        })
+        .then(user => {
+          commit('SET_USER', user)
+        })
+    )
   },
   logout({ commit }) {
     return feathers.logout().then(() => {

@@ -26,9 +26,6 @@
               <v-icon right>mdi-chevron-double-down</v-icon></v-btn
             >
           </v-flex>
-          <!-- <v-flex v-if="$vuetify.breakpoint.smAndUp" xs5>
-            <img src="/images/digital-contract.svg" />
-          </v-flex> -->
         </v-layout>
       </v-container>
     </v-img>
@@ -45,41 +42,6 @@
           </h1>
           <v-toolbar color="white" class="elevation-2" light>
             <v-layout row>
-              <!-- <v-flex shrink class="py-0">
-                <v-tabs v-model="filter" height="64">
-                  <v-tabs-slider height="10" color="primary" />
-                  <v-tab value="all">
-                    <v-avatar
-                      size="24"
-                      class="mr-2 white--text"
-                      color="secondary"
-                      dark
-                      >{{ results.length }}</v-avatar
-                    >
-                    All
-                  </v-tab>
-                  <v-tab value="contracts">
-                    <v-avatar
-                      size="24"
-                      class="mr-2 white--text"
-                      color="accent"
-                      dark
-                      >{{ contractsCount }}</v-avatar
-                    >
-                    Contracts
-                  </v-tab>
-                  <v-tab value="grants">
-                    <v-avatar
-                      size="24"
-                      class="mr-2 white--text"
-                      color="info"
-                      dark
-                      >{{ grantsCount }}</v-avatar
-                    >
-                    Grants
-                  </v-tab>
-                </v-tabs>
-              </v-flex> -->
               <v-flex shrink>
                 <v-btn-toggle
                   v-model="filter"
@@ -118,19 +80,6 @@
                   </v-btn>
                 </v-btn-toggle>
               </v-flex>
-              <!-- <v-select
-                  v-model="filter"
-                  hide-details
-                  :items="solicitationTypes"
-                  solo
-                  menu-props="overflowY"
-                  light
-                  background-color="grey lighten-2"
-                  flat
-                  label="Solicitation type"
-                />
-                -->
-
               <v-flex>
                 <v-text-field
                   v-model="search"
@@ -215,7 +164,13 @@
                           }}</span
                         >
                       </h1>
-                      <v-btn block small round depressed color="primary"
+                      <v-btn
+                        block
+                        small
+                        disabled
+                        round
+                        depressed
+                        color="primary"
                         >See details</v-btn
                       >
                       <v-btn
@@ -236,123 +191,6 @@
         </v-container>
       </section>
     </v-responsive>
-
-    <!-- <section class="grey lighten-2">
-      <v-container fluid grid-list-lg>
-        <v-layout row>
-          <v-flex xs3>
-            <v-card class="mb-2">
-              <v-card-text>
-                <v-text-field
-                  v-model="search"
-                  solo
-                  background-color="grey lighten-2"
-                  prepend-inner-icon="mdi-database-search"
-                  flat
-                  hide-details
-                  placeholder="Filter solicitations"
-                  class="mx-2"
-                  @input="searchSolicitations"
-                />
-              </v-card-text>
-            </v-card>
-            <v-card class="mb-2">
-              <v-card-title>Notice Type</v-card-title>
-              <v-card-text>
-                <v-checkbox hide-details label="Grant" />
-                <v-checkbox hide-details label="Contract" />
-                <v-checkbox hide-details label="Goods" />
-                <v-checkbox hide-details label="Services" />
-              </v-card-text>
-            </v-card>
-            <v-card>
-              <v-expansion-panel>
-                <v-expansion-panel-content>
-                  <template v-slot:header>
-                    <div>Notice Type</div>
-                  </template>
-                  <v-card>
-                    <v-card-text class="py-1">
-                      <v-checkbox hide-details label="Grant" />
-                      <v-checkbox hide-details label="Contract" />
-                      <v-checkbox hide-details label="Goods" />
-                      <v-checkbox hide-details label="Services" />
-                    </v-card-text>
-                  </v-card>
-                </v-expansion-panel-content>
-                <v-expansion-panel-content v-for="(item, i) in 5" :key="i">
-                  <template v-slot:header>
-                    <div>Item</div>
-                  </template>
-                  <v-card>
-                    <v-card-text
-                      >Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo
-                      consequat.</v-card-text
-                    >
-                  </v-card>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-card>
-          </v-flex>
-          <v-flex xs9>
-            <v-layout column>
-              <v-flex v-for="(item, i) in results" :key="i">
-                <v-card>
-                  <v-card-title class="title">{{
-                    item.noticeTitle
-                  }}</v-card-title>
-                  <v-divider />
-                  <v-card-text>
-                    {{ item.noticeText }}
-                  </v-card-text>
-                  <v-card-text>
-                    <h1 class="subheading font-weight-bold">
-                      Opening Date:<span class="subheading">
-                        {{ item.openDate }}</span
-                      >
-                    </h1>
-
-                    <h1 class="subheading font-weight-bold">
-                      Closing Date:<span class="subheading">
-                        {{ item.closeDate }}</span
-                      >
-                    </h1>
-                    &nbsp;&nbsp;
-                    <h1 class="subheading">{{ item.openDate }}</h1>
-                    <br />
-                    <h1 class="subheading font-weight-bold">
-                      Closing Date:
-                    </h1>
-                    &nbsp;&nbsp;
-                    <h1 class="subheading">{{ item.closeDate }}</h1>
-                    <v-list dense>
-                      <v-list-tile>
-                        <h1 class="subheading font-weight-bold">
-                          Opening Date:
-                        </h1>
-                        &nbsp;&nbsp;
-                        <h1 class="subheading">{{ item.openDate }}</h1>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <h1 class="subheading font-weight-bold">
-                          Closing Date:
-                        </h1>
-                        &nbsp;&nbsp;
-                        <h1 class="subheading">{{ item.closeDate }}</h1>
-                      </v-list-tile>
-                    </v-list>
-                  </v-card-text>
-                </v-card>
-              </v-flex>
-            </v-layout>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </section> -->
-
     <v-dialog
       v-model="dialog"
       fullscreen
@@ -458,7 +296,138 @@
               <v-container fill-height>
                 <v-layout fill-height row justify-center align-center>
                   <v-flex xs8>
-                    <h1>Getting started</h1>
+                    <h1>
+                      Welcome to the MDE Procurement Submission portal.
+                    </h1>
+                    <v-card color="amber" flat light class="my-3">
+                      <v-container grid-list-lg class="py-2">
+                        <v-layout row align-center>
+                          <v-flex shrink>
+                            <v-icon size="48">mdi-alert-circle-outline</v-icon>
+                          </v-flex>
+                          <v-flex class="text-xs-left">
+                            <h2>Notice to vendors:</h2>
+                            Please read the section below detailing the
+                            documentation required to submit a response.
+                            Although there is no time limit for submitting a
+                            response, your response progress
+                            <strong>IS NOT</strong> saved. If you exit the
+                            response screen or close your browser, you must
+                            restart your submission.
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-card>
+                    <br />
+                    <p>
+                      Things you'll need to complete your response:
+                    </p>
+                    <ul>
+                      <li>
+                        <v-menu
+                          max-width="300"
+                          color="secondary"
+                          dark
+                          offset-y
+                          top
+                          left
+                          nudge-top="10"
+                          open-on-hover
+                        >
+                          <a
+                            slot="activator"
+                            class="mb-1 font-weight-black secondary--text"
+                            target="_blank"
+                            href="https://www.grants.gov/applicants/organization-registration/step-1-obtain-duns-number.html"
+                          >
+                            DUNS number
+                          </a>
+                          <v-card color="secondary">
+                            <v-card-text>
+                              <span class="subheading">
+                                DUNS numbers are 9 digit numbers required to do
+                                business with the federal government.
+                              </span>
+                            </v-card-text>
+                          </v-card>
+                        </v-menu>
+                        or
+                        <v-menu
+                          max-width="300"
+                          color="secondary"
+                          dark
+                          offset-y
+                          top
+                          right
+                          nudge-top="10"
+                          open-on-hover
+                        >
+                          <a
+                            slot="activator"
+                            class="mb-1 font-weight-black secondary--text"
+                            target="_blank"
+                            href="https://corp.sos.ms.gov/corp/portal/c/page/corpBusinessIdSearch/portal.aspx?#clear=1"
+                          >
+                            Business ID
+                          </a>
+                          <v-card color="secondary">
+                            <v-card-text>
+                              <span class="subheading">
+                                Business IDs are 6 or 7 digit numbers numbers
+                                assigned to businesses registered with the
+                                Mississippi Secretary of State.
+                              </span>
+                            </v-card-text>
+                          </v-card>
+                        </v-menu>
+                      </li>
+                      <li>
+                        Contact name, phone and Email
+                      </li>
+                      <li>
+                        Your response and any supporting documents in
+                        <v-menu
+                          max-width="300"
+                          color="secondary"
+                          dark
+                          offset-y
+                          top
+                          right
+                          nudge-top="10"
+                          open-on-hover
+                        >
+                          <a
+                            slot="activator"
+                            class="mb-1 font-weight-black secondary--text"
+                            target="_blank"
+                            href="https://support.office.com/en-ie/article/save-or-convert-to-pdf-or-xps-d85416c5-7d77-4fd6-a216-6f4bf7c7c110#ID0EAADAAA=Office_2010_and_Newer_Versions"
+                          >
+                            PDF format
+                          </a>
+                          <v-card color="secondary">
+                            <v-card-text>
+                              <span class="subheading">
+                                PDF files are platform independent and ensure
+                                that vendor submission documents are readable by
+                                MDE.
+                              </span>
+                            </v-card-text>
+                          </v-card>
+                        </v-menu>
+                      </li>
+                    </ul>
+
+                    <v-divider class="my-4" />
+
+                    <h2>You're responding to:</h2>
+                    <v-card light>
+                      <v-card-title>
+                        <h3 v-text="editedItem.noticeTitle" />
+                      </v-card-title>
+                      <v-card-text class="py-1">
+                        <p v-text="editedItem.noticeText" />
+                      </v-card-text>
+                    </v-card>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -470,32 +439,68 @@
               <v-container fill-height>
                 <v-layout fill-height row justify-center align-center>
                   <v-flex xs8>
-                    <h1>Vendor Contact Information</h1>
-                    <br />
+                    <v-card color="primary" flat dark class="mb-4">
+                      <v-container grid-list-lg class="py-2">
+                        <v-layout row align-center>
+                          <v-flex shrink>
+                            <v-icon size="48">mdi-information</v-icon>
+                          </v-flex>
+                          <v-flex class="text-xs-left">
+                            <h2>Vendor contact information:</h2>
+                            Enter your company information here. Pay particular
+                            attention that your Email address is correct as this
+                            is MDE's primary contact method for submission
+                            related information and updates.
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-card>
+
+                    <v-text-field
+                      v-model="editedItem.vendorId"
+                      color="secondary"
+                      counter
+                      outline
+                      validate-on-blur
+                      type="tel"
+                      maxlength="9"
+                      :rules="[rules.required, rules.vendorId]"
+                      label="Enter a valid DUNS number (9 digits) or Business ID (6 or 7 digits)"
+                    />
                     <v-text-field
                       v-model="editedItem.vendorName"
                       outline
+                      validate-on-blur
                       label="Vendor/Company/DBA Name"
+                      :rules="[rules.required]"
                     />
                     <v-text-field
                       v-model="editedItem.vendorContactFirstName"
                       outline
+                      validate-on-blur
                       label="Vendor Contact First Name"
+                      :rules="[rules.required]"
                     />
                     <v-text-field
                       v-model="editedItem.vendorContactLastName"
                       outline
+                      validate-on-blur
                       label="Vendor Contact Last Name"
+                      :rules="[rules.required]"
                     />
                     <v-text-field
                       v-model="editedItem.vendorContactEmail"
                       outline
+                      validate-on-blur=""
                       label="Vendor Contact Email"
+                      :rules="[rules.required]"
                     />
                     <v-text-field
                       v-model="editedItem.vendorContactPhone"
                       outline
+                      validate-on-blur
                       label="Vendor Contact Phone"
+                      :rules="[rules.required]"
                       type="tel"
                       mask="phone"
                     />
@@ -504,135 +509,6 @@
               </v-container>
             </v-card-text>
           </v-window-item>
-          <!-- <v-window-item :value="2">
-            <v-card-text>
-              <v-container fill-height>
-                <v-layout fill-height row justify-center align-center>
-                  <v-flex xs8>
-                    <h1>Notification Information</h1>
-                    <br />
-                    <v-text-field
-                      v-model="editedItem.noticeTitle"
-                      outline
-                      label="Notice Title"
-                    />
-                    <v-textarea
-                      v-model="editedItem.noticeText"
-                      outline
-                      label="Notice Summary"
-                    />
-                    <v-select
-                      v-model="editedItem.requestType"
-                      outline
-                      label="Request Type"
-                      :items="['RFA', 'RFP', 'IFB']"
-                    />
-                    <v-select
-                      v-model="editedItem.noticeType"
-                      outline
-                      label="Notice Type"
-                      :items="['Contract', 'Grant']"
-                    />
-                    <v-text-field outline label="Notice ID" />
-                    <v-layout row>
-                      <v-flex class="mr-1">
-                        <v-menu
-                          ref="openDateMenu"
-                          v-model="openDateMenu"
-                          :close-on-content-click="false"
-                          :nudge-right="40"
-                          :return-value.sync="editedItem.openDate"
-                          lazy
-                          transition="scale-transition"
-                          offset-y
-                          full-width
-                          min-width="290px"
-                        >
-                          <template v-slot:activator="{ on }">
-                            <v-text-field
-                              v-model="editedItem.openDate"
-                              outline
-                              label="Select notice open date"
-                              append-icon="event"
-                              readonly
-                              v-on="on"
-                            ></v-text-field>
-                          </template>
-                          <v-date-picker
-                            v-model="editedItem.openDate"
-                            no-title
-                            scrollable
-                          >
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              flat
-                              color="primary"
-                              @click="openDateMenu = false"
-                              >Cancel</v-btn
-                            >
-                            <v-btn
-                              flat
-                              color="primary"
-                              @click="
-                                $refs.openDateMenu.save(editedItem.openDate)
-                              "
-                              >OK</v-btn
-                            >
-                          </v-date-picker>
-                        </v-menu>
-                      </v-flex>
-                      <v-flex class="ml-1">
-                        <v-menu
-                          ref="closeDateMenu"
-                          v-model="closeDateMenu"
-                          :close-on-content-click="false"
-                          :nudge-right="40"
-                          :return-value.sync="editedItem.closeDate"
-                          lazy
-                          transition="scale-transition"
-                          offset-y
-                          full-width
-                          min-width="290px"
-                        >
-                          <template v-slot:activator="{ on }">
-                            <v-text-field
-                              v-model="editedItem.closeDate"
-                              outline
-                              label="Select notice close date"
-                              append-icon="event"
-                              readonly
-                              v-on="on"
-                            ></v-text-field>
-                          </template>
-                          <v-date-picker
-                            v-model="editedItem.closeDate"
-                            no-title
-                            scrollable
-                          >
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              flat
-                              color="primary"
-                              @click="closeDateMenu = false"
-                              >Cancel</v-btn
-                            >
-                            <v-btn
-                              flat
-                              color="primary"
-                              @click="
-                                $refs.closeDateMenu.save(editedItem.closeDate)
-                              "
-                              >OK</v-btn
-                            >
-                          </v-date-picker>
-                        </v-menu>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-card-text>
-          </v-window-item> -->
           <v-window-item :value="3">
             <v-card-text>
               <v-container fill-height>
@@ -845,7 +721,7 @@
                           </v-card>
                         </v-flex>
 
-                        <v-flex xs12>
+                        <v-flex xs6>
                           <v-card>
                             <v-toolbar card light dense>
                               <h3>{{ editedItem.noticeType }} Information:</h3>
@@ -890,6 +766,32 @@
                                     >
                                     <v-list-tile-title>{{
                                       editedItem.closeDate
+                                    }}</v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+                              </v-list>
+                            </v-card-text>
+                          </v-card>
+                        </v-flex>
+
+                        <v-flex xs6>
+                          <v-card>
+                            <v-toolbar card light dense>
+                              <h3>Attached Files:</h3>
+                            </v-toolbar>
+                            <v-divider />
+                            <v-card-text>
+                              <v-list subheader>
+                                <v-list-tile
+                                  v-for="file in files"
+                                  :key="file.filename"
+                                >
+                                  <v-list-tile-content>
+                                    <v-list-tile-sub-title
+                                      >Title:</v-list-tile-sub-title
+                                    >
+                                    <v-list-tile-title class="caption">{{
+                                      file.name
                                     }}</v-list-tile-title>
                                   </v-list-tile-content>
                                 </v-list-tile>
@@ -1048,6 +950,26 @@
                                   <v-list-tile>
                                     <v-list-tile-content>
                                       <v-list-tile-sub-title
+                                        >Submitted at:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        submissionTime
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
+                                        >Received at:</v-list-tile-sub-title
+                                      >
+                                      <v-list-tile-title>{{
+                                        formResponse.createdAt
+                                      }}</v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-sub-title
                                         >Submission ID:</v-list-tile-sub-title
                                       >
                                       <v-list-tile-title>{{
@@ -1145,8 +1067,19 @@
           >
           <v-btn
             v-if="step < 4"
-            class="primary"
-            flat
+            color="primary"
+            depressed
+            :disabled="
+              (step === 2 &&
+                !(
+                  editedItem.vendorName &&
+                  editedItem.vendorContactFirstName &&
+                  editedItem.vendorContactLastName &&
+                  editedItem.vendorContactEmail &&
+                  editedItem.vendorContactPhone
+                )) ||
+                (step === 3 && files.length === 0)
+            "
             large
             round
             @click="step++"
@@ -1160,6 +1093,7 @@
             class="primary"
             flat
             large
+            :loading="loading"
             round
             @click="submit"
             >{{ buttonText
@@ -1201,10 +1135,25 @@ export default {
     return {
       search: '',
       results: [],
+      loading: false,
+      selectedNotice: [],
       files: [],
       dialog: false,
       fileDeleteDialog: false,
       step: 1,
+      rules: {
+        required: value => !!value || 'Required.',
+        duns: value => value.length === 9 || 'Not a valid DUNS number.',
+        businessId: value =>
+          value.length === 6 ||
+          value.length === 7 ||
+          'Not a valid Business ID number.',
+        vendorId: value =>
+          value.length === 6 ||
+          value.length === 7 ||
+          value.length === 9 ||
+          'Not a valid DUNS or Business ID number.'
+      },
       dragging: false,
       uploadedFiles: [],
       uploadId: '',
@@ -1216,6 +1165,7 @@ export default {
         mdeContactLastName: '',
         mdeContactPhone: '',
         mdeContactEmail: '',
+        vendorId: '',
         vendorName: '',
         vendorContactFirstName: '',
         vendorContactLastName: '',
@@ -1311,8 +1261,6 @@ export default {
           alert(error)
         })
         .then(this.$router.replace('/'))
-      // this.$router.replace("/")
-      // this.printSnackbar = true
     },
     removeFile(item) {
       // called when remove file is clicked in file upload component
@@ -1321,7 +1269,7 @@ export default {
       this.fileDialog = false
     },
     handleDragDropUpload(e) {
-      this.dragging = false // set dropzone state to ready
+      this.dragging = false
 
       const droppedFiles = e.dataTransfer.files
       for (let i = 0; i < droppedFiles.length; i++) {
@@ -1338,15 +1286,13 @@ export default {
       }
     },
     submit() {
+      this.submissionTime = new Date().toLocaleTimeString()
       const formData = new FormData()
 
       for (let i = 0; i < this.files.length; i++) {
         const file = this.files[i]
         formData.append('uri', file)
       }
-
-      // formData.append('uri')
-      // formData.append(Object.assign({}, this.editedItem))
 
       formData.append(
         'mdeContactFirstName',
@@ -1369,6 +1315,7 @@ export default {
       formData.append('requestType', this.editedItem.requestType)
       formData.append('openDate', this.editedItem.openDate)
       formData.append('closeDate', this.editedItem.closeDate)
+      this.loading = true
 
       // formData.append('vendorName', this.vendorName)
       // formData.append('contactFirstName', this.contactFirstName)
@@ -1380,7 +1327,7 @@ export default {
 
       axios
         .post(
-          'https://c65b7304.ngrok.io/submissions',
+          'http://localhost:3030/submissions',
           // 'https://mde-procurement-api.azurewebsites.net/submissions',
           formData,
           {
@@ -1393,8 +1340,8 @@ export default {
           }
         )
         .then(response => {
+          this.loading = false
           // eslint-disable-next-line no-console
-          console.log('response files', response.data.files)
           this.uploadedFiles = response.data.files
           this.uploadId = response.data._id
           this.submissionTime = response.data.createdAt
@@ -1413,8 +1360,6 @@ export default {
     handleSubmission(solicitation) {
       this.selectedNotice = solicitation
       this.dialog = true
-      // this.$store.commit('SET_SOLICITATION', solicitation)
-      // this.$router.replace('/submit')
     },
     searchSolicitations() {
       this.results = this.notices.filter(

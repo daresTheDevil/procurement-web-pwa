@@ -56,6 +56,8 @@ export default {
     '@nuxtjs/moment',
     '@nuxtjs/toast'
   ],
+
+  transition: 'page',
   /*
    ** Axios module configuration
    */

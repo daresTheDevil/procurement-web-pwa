@@ -1,18 +1,47 @@
 <template>
   <v-container fill-height fluid class="primary">
     <v-layout row fill-height align-center justify-center>
-      <v-flex xs3>
-        <v-window v-model="step">
-          <v-window-item :value="1">
-            <v-card class="elevation-20">
-              <v-card-text class="text-xs-center justify-space-between">
-                <img src="/images/mde-logo-dark.svg" height="75" />
-                <h1 class="font-weight-regular">Log in to your account</h1>
+      <v-flex xs12 md3>
+        <v-card class="elevation-20">
+          <v-btn fab top left nuxt to="/" absolute color="error"
+            ><v-icon>mdi-close</v-icon></v-btn
+          >
+          <v-card-title class="justify-center">
+            <img
+              src="/images/mde-logo-dark.svg"
+              height="75"
+              class="text-xs-center"
+            />
+          </v-card-title>
+
+          <v-tabs v-model="step" fixed-tabs centered>
+            <v-tab>Log In</v-tab>
+            <v-tab>Sign Up</v-tab>
+          </v-tabs>
+          <v-window v-model="step">
+            <v-window-item :value="0">
+              <v-card-text>
+                <v-btn large block outline class="text-xs-left"
+                  ><v-icon left>mdi-github-circle</v-icon>Log in with
+                  Github</v-btn
+                >
+                <v-btn block large outline class="text-xs-left"
+                  ><v-icon left>mdi-google</v-icon>Log in with Google</v-btn
+                >
+                <v-btn block large outline class="text-xs-left" @click="azure"
+                  ><v-icon left>mdi-office</v-icon>Log in with O365</v-btn
+                >
               </v-card-text>
-              <v-card-text class="pb-0">
+              <v-card-title class="justify-center py-1">
+                <v-divider class="grey" /><span class="mx-4">OR</span
+                ><v-divider class="grey" />
+              </v-card-title>
+              <v-card-text>
                 <v-text-field
                   v-model="email"
+                  class="mb-1"
                   outline
+                  hide-details
                   label="Email"
                   append-icon="mdi-account"
                 />
@@ -28,108 +57,34 @@
                   ><v-icon left medium>mdi-school</v-icon>Log in</v-btn
                 >
               </v-card-text>
+            </v-window-item>
+
+            <v-window-item :value="1">
+              <v-card-text>
+                <v-btn large block outline class="text-xs-left"
+                  ><v-icon left>mdi-github-circle</v-icon>Connect with
+                  Github</v-btn
+                >
+                <v-btn block large outline class="text-xs-left"
+                  ><v-icon left>mdi-google</v-icon>Connect with Google</v-btn
+                >
+                <v-btn block large outline class="text-xs-left"
+                  ><v-icon left>mdi-office</v-icon>Connect with O365</v-btn
+                >
+              </v-card-text>
               <v-card-title class="justify-center py-1">
                 <v-divider class="mx-4 grey" /><span>OR</span
                 ><v-divider class="mx-4 grey" />
               </v-card-title>
-              <v-card-text class="pt-0">
-                <v-btn
-                  block
-                  dark
-                  round
-                  depressed
-                  color="deep-orange darken-1"
-                  @click="login"
-                  ><v-icon medium left>mdi-gmail</v-icon>Connect with
-                  Google</v-btn
-                >
-                <v-btn
-                  block
-                  dark
-                  round
-                  depressed
-                  color="light-blue darken-1"
-                  @click="login"
-                  ><v-icon medium left>mdi-office</v-icon>Connect with
-                  0365</v-btn
+              <v-card-text>
+                <v-btn block round large depressed color="accent" @click="login"
+                  ><v-icon left medium>mdi-account-plus</v-icon>Create a new
+                  account</v-btn
                 >
               </v-card-text>
-            </v-card>
-            <h3 class="font-weight-regular mt-3 white--text">
-              Don't have an account?
-              <a class="white--text font-weight-black" @click="step = 2"
-                >Sign Up</a
-              >
-            </h3>
-          </v-window-item>
-
-          <v-window-item :value="2">
-            <v-card class="elevation-20">
-              <v-card-text class="text-xs-center justify-space-between">
-                <img src="/images/mde-logo-dark.svg" height="75" />
-                <h1 class="font-weight-regular">Sign up</h1>
-              </v-card-text>
-              <v-card-text class="pb-0">
-                <v-text-field
-                  v-model="createEmail"
-                  outline
-                  label="Email"
-                  append-icon="mdi-account"
-                />
-                <v-text-field
-                  v-model="createPassword"
-                  outline
-                  :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-                  label="Password"
-                  :type="showPassword ? 'text' : 'password'"
-                  @click:append="showPassword = !showPassword"
-                />
-                <v-text-field
-                  v-model="verifyPassword"
-                  outline
-                  :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-                  label="Password"
-                  :type="showPassword ? 'text' : 'password'"
-                  @click:append="showPassword = !showPassword"
-                />
-                <v-btn block large depressed color="accent" @click="login"
-                  ><v-icon left medium>mdi-school</v-icon>Log in</v-btn
-                >
-              </v-card-text>
-              <v-card-title class="justify-center py-1">
-                <v-divider /><span class="mx-2">OR</span><v-divider />
-              </v-card-title>
-              <v-card-text class="pt-0">
-                <v-btn
-                  block
-                  dark
-                  round
-                  depressed
-                  color="deep-orange darken-1"
-                  @click="login"
-                  ><v-icon medium left>mdi-gmail</v-icon>Connect with
-                  Google</v-btn
-                >
-                <v-btn
-                  block
-                  dark
-                  round
-                  depressed
-                  color="light-blue darken-1"
-                  @click="login"
-                  ><v-icon medium left>mdi-office</v-icon>Connect with
-                  0365</v-btn
-                >
-              </v-card-text>
-            </v-card>
-            <h3 class="font-weight-regular mt-3 white--text">
-              Already have an account?
-              <a class="white--text font-weight-black" @click="step = 1"
-                >Sign in...</a
-              >
-            </h3>
-          </v-window-item>
-        </v-window>
+            </v-window-item>
+          </v-window>
+        </v-card>
       </v-flex>
     </v-layout>
     <v-snackbar v-model="snackBar" :color="snackBarColor" top :timeout="8000">
@@ -148,13 +103,25 @@ export default {
       createPassword: '',
       verifyPassword: '',
       showPassword: false,
-      snackSnack: false,
+      snackBar: false,
       snackBarColor: '',
       snackBarMessage: '',
-      step: 1
+      step: 0
     }
   },
   methods: {
+    azure() {
+      this.showSnack('secondary', 'Logging in...')
+      this.$store
+        .dispatch('azure', { email: this.email, password: this.password })
+        .then(() => {
+          this.$router.replace('/procurement/dashboard')
+        })
+        .catch(error => {
+          this.showSnack('error', error)
+          this.email = this.password = ''
+        })
+    },
     login() {
       this.showSnack('secondary', 'Logging in...')
       this.$store
@@ -163,7 +130,7 @@ export default {
           this.$router.replace('/procurement/dashboard')
         })
         .catch(error => {
-          this.showSnack('error', error.message)
+          this.showSnack('error', error)
           this.email = this.password = ''
         })
     },
